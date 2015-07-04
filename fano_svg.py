@@ -29,7 +29,7 @@ def Text((x, y), s, i=0):
       y += 15
       i += 1
   elif i == 0:
-    print '<text x="%f" y="%f" fill="black" font-size="18" font-family="Arial, Helvetica, sans-serif" font="Open Sans">%s</text> ' % (
+    print '<text x="%f" y="%f" fill="black" font-weight="bold" font-size="18" font-family="Arial, Helvetica, sans-serif" font="Open Sans">%s</text> ' % (
         x, y, s)
   else:
     print '<text x="%f" y="%f" fill="black" font-size="14" font-family="Arial, Helvetica, sans-serif" font="Open Sans">%s</text> ' % (
