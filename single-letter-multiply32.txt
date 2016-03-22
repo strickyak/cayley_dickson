@@ -1,0 +1,192 @@
+
+       1 .        a =        a
+       1 .        b =        b
+       1 .        c =        c
+       1 .        x =        x
+       1 .        y =        y
+
+       a .        a =       -1
+       a .        b =       ab
+       a .        c =       ac
+       a .        x =       ax
+       a .        y =       ay
+
+       b .        a =      -ab
+       b .        b =       -1
+       b .        c =       bc
+       b .        x =       bx
+       b .        y =       by
+
+      ab .        a =        b
+      ab .        b =       -a
+      ab .        c =      abc
+      ab .        x =      abx
+      ab .        y =      aby
+
+       c .        a =      -ac
+       c .        b =      -bc
+       c .        c =       -1
+       c .        x =       cx
+       c .        y =       cy
+
+      ac .        a =        c
+      ac .        b =     -abc
+      ac .        c =       -a
+      ac .        x =      acx
+      ac .        y =      acy
+
+      bc .        a =      abc
+      bc .        b =        c
+      bc .        c =       -b
+      bc .        x =      bcx
+      bc .        y =      bcy
+
+     abc .        a =      -bc
+     abc .        b =       ac
+     abc .        c =      -ab
+     abc .        x =     abcx
+     abc .        y =     abcy
+
+       x .        a =      -ax
+       x .        b =      -bx
+       x .        c =      -cx
+       x .        x =       -1
+       x .        y =       xy
+
+      ax .        a =        x
+      ax .        b =     -abx
+      ax .        c =     -acx
+      ax .        x =       -a
+      ax .        y =      axy
+
+      bx .        a =      abx
+      bx .        b =        x
+      bx .        c =     -bcx
+      bx .        x =       -b
+      bx .        y =      bxy
+
+     abx .        a =      -bx
+     abx .        b =       ax
+     abx .        c =    -abcx
+     abx .        x =      -ab
+     abx .        y =     abxy
+
+      cx .        a =      acx
+      cx .        b =      bcx
+      cx .        c =        x
+      cx .        x =       -c
+      cx .        y =      cxy
+
+     acx .        a =      -cx
+     acx .        b =     abcx
+     acx .        c =       ax
+     acx .        x =      -ac
+     acx .        y =     acxy
+
+     bcx .        a =    -abcx
+     bcx .        b =      -cx
+     bcx .        c =       bx
+     bcx .        x =      -bc
+     bcx .        y =     bcxy
+
+    abcx .        a =      bcx
+    abcx .        b =     -acx
+    abcx .        c =      abx
+    abcx .        x =     -abc
+    abcx .        y =    abcxy
+
+       y .        a =      -ay
+       y .        b =      -by
+       y .        c =      -cy
+       y .        x =      -xy
+       y .        y =       -1
+
+      ay .        a =        y
+      ay .        b =     -aby
+      ay .        c =     -acy
+      ay .        x =     -axy
+      ay .        y =       -a
+
+      by .        a =      aby
+      by .        b =        y
+      by .        c =     -bcy
+      by .        x =     -bxy
+      by .        y =       -b
+
+     aby .        a =      -by
+     aby .        b =       ay
+     aby .        c =    -abcy
+     aby .        x =    -abxy
+     aby .        y =      -ab
+
+      cy .        a =      acy
+      cy .        b =      bcy
+      cy .        c =        y
+      cy .        x =     -cxy
+      cy .        y =       -c
+
+     acy .        a =      -cy
+     acy .        b =     abcy
+     acy .        c =       ay
+     acy .        x =    -acxy
+     acy .        y =      -ac
+
+     bcy .        a =    -abcy
+     bcy .        b =      -cy
+     bcy .        c =       by
+     bcy .        x =    -bcxy
+     bcy .        y =      -bc
+
+    abcy .        a =      bcy
+    abcy .        b =     -acy
+    abcy .        c =      aby
+    abcy .        x =   -abcxy
+    abcy .        y =     -abc
+
+      xy .        a =      axy
+      xy .        b =      bxy
+      xy .        c =      cxy
+      xy .        x =        y
+      xy .        y =       -x
+
+     axy .        a =      -xy
+     axy .        b =     abxy
+     axy .        c =     acxy
+     axy .        x =       ay
+     axy .        y =      -ax
+
+     bxy .        a =    -abxy
+     bxy .        b =      -xy
+     bxy .        c =     bcxy
+     bxy .        x =       by
+     bxy .        y =      -bx
+
+    abxy .        a =      bxy
+    abxy .        b =     -axy
+    abxy .        c =    abcxy
+    abxy .        x =      aby
+    abxy .        y =     -abx
+
+     cxy .        a =    -acxy
+     cxy .        b =    -bcxy
+     cxy .        c =      -xy
+     cxy .        x =       cy
+     cxy .        y =      -cx
+
+    acxy .        a =      cxy
+    acxy .        b =   -abcxy
+    acxy .        c =     -axy
+    acxy .        x =      acy
+    acxy .        y =     -acx
+
+    bcxy .        a =    abcxy
+    bcxy .        b =      cxy
+    bcxy .        c =     -bxy
+    bcxy .        x =      bcy
+    bcxy .        y =     -bcx
+
+   abcxy .        a =    -bcxy
+   abcxy .        b =     acxy
+   abcxy .        c =    -abxy
+   abcxy .        x =     abcy
+   abcxy .        y =    -abcx

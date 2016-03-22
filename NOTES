@@ -1,0 +1,131 @@
+Command M:  Checks that Kn is Alternate, and counts Moufang Rules.
+
+Only K8 is Moufang.
+
+$ python  cayley_dickson.py M 8 | awk '{c[$0]++} END {for(e in c){print c[e], e}}'
+512 True True True
+
+$ python  cayley_dickson.py M 16 | awk '{c[$0]++} END {for(e in c){print c[e], e}}'
+168 True False True
+168 False True False
+168 True True False
+168 True False False
+2920 True True True
+168 False True True
+168 False False False
+168 False False True
+
+$ python  cayley_dickson.py M 32 | awk '{c[$0]++} END {for(e in c){print c[e], e}}'
+2520 True False True
+2520 False True False
+2520 True True False
+2520 True False False
+15128 True True True
+2520 False True True
+2520 False False False
+
+$ python  cayley_dickson.py M 64 | awk '{c[$0]++} END {for(e in c){print c[e], e}}'
+26040 True False True
+26040 False True False
+26040 True True False
+26040 True False False
+79864 True True True
+26040 False True True
+26040 False False False
+26040 False False True
+
+===========================
+$ python cayley_dickson.py MulSingle 1024
+===========================
+
+GAP & CYCLIC Symmetries:
+
+# Produce a full K32 multiplication table.
+$ python  cayley_dickson.py Mul  32 | sort >  ,m
+
+# GAP: can use either x or y (but not both) and they follow the same pattern.
+
+# Those lines with no 'y'
+$ grep -v y < ,m > ,8
+
+# Those lines with no 'x', change y to x;
+$ grep -v x < ,m | tr y x > ,9
+$ diff ,8 ,9
+
+# They're the same.  So applying the x-doubling or the y-doubling does the same thing, where both are not present.
+
+# Similarly, for a and b at the head:
+$ grep -v a < ,m > ,8
+$ grep -v b < ,m | tr a b > ,9
+$ diff ,8 ,9
+
+# And for c and x in the middle:
+$ grep -v c < ,m > ,8
+$ grep -v x < ,m | tr c x > ,9
+$ diff ,8 ,9
+
+# But not for unsequential b & x:
+$ grep -v b < ,m > ,8
+$ grep -v x < ,m | tr b x > ,9
+$ diff ,8 ,9
+2,5d1
+<        a .       ac =       -c
+<        a .      acx =       cx
+<        a .     acxy =     -cxy
+<        a .      acy =       cy
+6a3,4
+>        a .      axc =       xc
+>        a .     axcy =     -xcy
+...
+
+
+# CYCLIC:
+# Rotate 'abcx' into 'bcxy' (without the 5th letter), and it works.
+$ grep -v y < ,m > ,8
+$ grep -v a  < ,m | tr bcxy abcx  > ,9
+$ diff ,8 ,9
+
+================================
+
+Anti-Commutative Checks:  if i==0 or j==0 or i==j: commutative else: negated.
+$ python cayley_dickson.py AC 32
+$ python cayley_dickson.py AC 64
+$ python cayley_dickson.py AC 128
+
+===================================
+
+Trimming the Multiplication Table Cases:
+$ python cayley_dickson.py Mul 32 | wc
+   1024    5120   31744
+$ python cayley_dickson.py MulTrim 32 | wc
+    325    1625   10075
+$ python cayley_dickson.py MulTrim 32 | python reduce-by-gap-and-cycle.py | wc
+    325    1625   10075
+$ python cayley_dickson.py MulTrim 32 | python reduce-by-gap-and-cycle.py | sort -u | wc
+    147     735    4557
+
+# Looking for cases of Alternate:  Two are negative!
+#   Negative if len(result) == 2.
+
+$ python cayley_dickson.py MulTrim 32 | python reduce-by-gap-and-cycle.py | sort -u | sort -k3 | python pawk.py 'w[0].startswith(w[2])'  line 
+     abc .       ab =        c
+    abcd .       ab =      -cd
+    abcd .      abc =        d
+   abcde .       ab =      cde
+   abcde .      abc =      -de
+   abcde .     abcd =        e
+
+=======================
+
+Trying to use cyclic around-the-corner doesn't work:
+
+$ tr abcde bcdea < ,m | sort > ,s
+$ diff ,m ,s | wc
+   1546    8906   49422
+
+=======================
+
+$ python cayley_dickson.py MulTrim 32 | python reduce-by-gap-and-cycle.py | sort -u | sort -k3 | wc
+    147     735    4557
+
+
