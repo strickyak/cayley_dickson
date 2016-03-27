@@ -1,0 +1,142 @@
+<html>
+  <head>
+  </head>
+<body bgcolor="#555555">
+  <table border=1><tr><td>
+    <svg id="main" width="900" height="500" xmlns="http://www.w3.org/2000/svg">
+      <circle id="redcircle" cx="5" cy="5" r="9" fill="red" />
+  </svg>
+</table>
+
+<!-- script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.2.5/svg.min.js"></script -->
+<script src="/home/strick/git/cayley_dickson/svg.min.225.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+function getViewport() {
+
+ var viewPortWidth;
+ var viewPortHeight;
+
+ // the more standards compliant browsers (mozilla/netscape/opera/IE7) use window.innerWidth and window.innerHeight
+ if (typeof window.innerWidth != 'undefined') {
+   viewPortWidth = window.innerWidth,
+   viewPortHeight = window.innerHeight
+ }
+
+// IE6 in standards compliant mode (i.e. with a valid doctype as the first line in the document)
+ else if (typeof document.documentElement != 'undefined'
+ && typeof document.documentElement.clientWidth !=
+ 'undefined' && document.documentElement.clientWidth != 0) {
+    viewPortWidth = document.documentElement.clientWidth,
+    viewPortHeight = document.documentElement.clientHeight
+ }
+
+ // older versions of IE
+ else {
+   viewPortWidth = document.getElementsByTagName('body')[0].clientWidth,
+   viewPortHeight = document.getElementsByTagName('body')[0].clientHeight
+ }
+ return [viewPortWidth, viewPortHeight];
+}
+</script>
+
+
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<script type="text/javascript" charset="utf-8">
+if (!SVG.supported) {
+  alert('Your browser does not support SVG.')
+}
+
+// Global Geometry.
+GW = 900
+GH = 500
+NB = 4
+GSetupTime = 400
+Ghead = 50  // header message
+Gfoot = 450  // footer message
+Gbut = Gfoot = 300 // footer buttons
+GdispY = 100 // main drawing region
+GdispX = 50
+GheliX = 700  // Helipad location.
+GheliY = GdispY+20
+
+// create svg drawing paper
+var G = SVG('main').size(GW, GH)
+
+// Create display.
+Display = G.group().move(-200, -200)
+Display.animate(GSetupTime).move(GdispX, GdispY)
+Display.rect(800, 150).fill('#8f8')
+
+// create buttons
+Buttons = {}
+FillActiveButton = '#fff'
+FillPassiveButton = '#0cc'
+
+Moving = {}
+function BuildButtons() {
+  for (i=0; i<NB; i++) {
+    Moving[i] = false
+    b = G.group().move(i * 200 + 100, Gbut)
+    br = b.rect(100, 100)
+         .fill(FillPassiveButton)
+         .mouseover(function() { this.fill(FillActiveButton) })
+         .mouseout (function() { if (!Moving[this.i]) {this.fill(FillPassiveButton)} })
+    br.i = i
+    bt = b.text('' + i)
+         .move(50, 0)
+         .leading(1.1)
+         .font({ family: 'Helvetica', size: 80, anchor: 'middle'})
+         .mouseover(function() { this.parent().first().fill(FillActiveButton) })
+         .mouseout (function() { if (!Moving[this.i]) this.parent().first().fill(FillPassiveButton) })
+    bt.i = i
+    b.move(i * 200 + 100, GH)
+    b.animate(GSetupTime).move(i * 200 + 100, Gbut)
+    ;(function (bb, ii) {
+      clickFn = (function() {
+        Moving[ii] = true
+        bb.first().fill(FillActiveButton)
+        bb.animate(GSetupTime).move(GheliX, GheliY)
+      })
+    })(b, i)
+    br.click(clickFn)
+    bt.click(clickFn)
+    Buttons[i] = b
+  }
+}
+
+Letters = [ "a", "b", "c", "d", "e" ]
+Minuses = [ ]
+Shuttle = null
+LettersW = {}
+
+LetterGroup = null
+function RenderLetters() {
+  if (LetterGroup) { LetterGroup.remove() }
+  LetterGroup = Display.group()
+  var i
+  for (i=0; i<Letters.length; i++) {
+    LetterGroup.text(Letters[i])
+        .move(50 + i*50, 50)
+        .font({ family: 'Helvetica', size: 80, anchor: 'left'})
+        .leading(1.1)
+  }
+}
+
+BuildButtons()
+RenderLetters()
+
+/*
+Text = {}
+for (i=0; i < 20; i++) {
+  t = Display.text('' + (i % 10)).move(i*50, 0)
+          .font({ family: 'Helvetica', size: 80, anchor: 'left'})
+          .animate(200).move(i*50, 50).loop(1, true)
+  Text = t
+}
+*/
+
+</script>
