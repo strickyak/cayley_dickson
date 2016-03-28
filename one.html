@@ -63,7 +63,7 @@ GdispX = 50   // Main display.
 GdispY = 100
 GheliX = 700  // Helipad location.
 GheliY = GdispY+20
-GdispTab = 250
+GdispTab = 300 // 250
 GdispGap = 50
 GdispV = 50  // Vertical display gap
 
@@ -81,11 +81,10 @@ FillActiveButton = '#fff'
 FillPassiveButton = '#0cc'
 
 CurrentCards = ['b', 'c', 'd', 'd']
-Chosen = null
+Chosen = -1
 Negs = 0
 NegsW = {}
 function BuildButtons() {
-  Chosen = -1  // None chosen yet.  Remove old buttons.
   for (var i=0; i<NB; i++) { if (i in Buttons) Buttons[i].remove() }
   //for (i in Buttons) { Buttons[i].remove() }
 
@@ -247,11 +246,11 @@ function Leapfrog() {
     } else {
       // No annihilation.
       newLetters = []
-      for (var j=0; j<i; j++) {
+      for (var j=0; j<=i; j++) {
         newLetters.push(Letters[j])
       }
       newLetters.push(c)
-      for (var j=i; j<ll; j++) {
+      for (var j=i+1; j<ll; j++) {
         newLetters.push(Letters[j])
       }
     }
@@ -272,6 +271,9 @@ function Leapfrog() {
 
   chain.push(function(){
     // Reset & Reactivate as final thing.
+    CurrentCards[Chosen] = RandomCard()
+    Leaper.remove()
+
     Letters = newLetters
     BuildButtons()
     RenderLetters()
@@ -288,6 +290,11 @@ function Leapfrog() {
     }
   }
   if (fn) {fn()}
+}
+
+function RandomCard() {
+  var r = Math.floor(Math.random()*4.99)
+  return String.fromCharCode(97 + r);
 }
 
 BuildButtons()
