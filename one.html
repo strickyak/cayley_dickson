@@ -85,10 +85,12 @@ Chosen = -1
 Negs = 0
 NegsW = {}
 function BuildButtons() {
-  for (var i=0; i<NB; i++) { if (i in Buttons) Buttons[i].remove() }
+  //for (var i=0; i<NB; i++) { if (i in Buttons) Buttons[i].remove() }
   //for (i in Buttons) { Buttons[i].remove() }
 
   for (var i=0; i<NB; i++) {
+    if (Chosen >= 0 && Chosen != i) { continue }
+
     // The button group
     var b = G.group().move(i * 200 + 100, Gbut)
     Buttons[i] = b
@@ -125,8 +127,8 @@ function BuildButtons() {
   }
 }
 
-Letters = [ '1' ]
 Letters = [ 'a', 'b', 'c', 'd', 'e' ]
+Letters = [ '1' ]
 Minuses = [ ]
 Shuttle = null
 LettersW = {}
@@ -149,6 +151,8 @@ function RenderLetters() {
 
 Leaper = null
 function Leapfrog() {
+  var chain = []
+  var ll = Letters.length 
   var c = CurrentCards[Chosen]
   Leaper = G.text(c)
          .move(GheliX, GdispY+GdispV)
@@ -157,12 +161,18 @@ function Leapfrog() {
 
   Buttons[Chosen].first().next().remove()  // Remove letter from heliport.
 
-  var ll = Letters.length 
-  chain = []
+  // First slide left near letters
+  chain.push(function(){
+    return Leaper.animate(D).move(GdispX + GdispTab + ll*GdispGap, GdispY+0*GdispV)
+  })
+
   if (Letters[0]=='1') {
     // Special case for '1'.
-    Leaper.animate(D).move(GdispX + GdispTab, GdispY+0*GdispV).after(function() {
-      LettersW[0].animate(D).move(GdispX + GdispTab, GH)
+    chain.push(function(){
+      return Leaper.animate(D).move(GdispX + GdispTab, GdispY+0*GdispV)
+    })
+    chain.push(function(){
+      return LettersW[0].animate(D).move(GdispX + GdispTab, GH)
     })
     newLetters = [c]
   } else {
@@ -254,6 +264,9 @@ function Leapfrog() {
         newLetters.push(Letters[j])
       }
     }
+  }
+  if (newLetters.length == 0) {
+    newLetters = [ '1' ]
   }
 
   // Tear off pairs of minuse.
