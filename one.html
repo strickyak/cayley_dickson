@@ -55,6 +55,7 @@ GW = 900
 GH = 500
 NB = 4
 GSetupTime = 400
+D = 500
 Ghead = 50  // header message
 Gfoot = 450  // footer message
 Gbut = Gfoot = 300 // footer buttons
@@ -81,14 +82,17 @@ FillPassiveButton = '#0cc'
 
 CurrentCards = ['b', 'c', 'd', 'd']
 Chosen = null
+Negs = 0
+NegsW = {}
 function BuildButtons() {
   Chosen = -1  // None chosen yet.  Remove old buttons.
-  //for (var i=0; i<NB; i++) { if (i in Buttons) Buttons[i].remove() }
-  for (i in Buttons) { Buttons[i].remove() }
+  for (var i=0; i<NB; i++) { if (i in Buttons) Buttons[i].remove() }
+  //for (i in Buttons) { Buttons[i].remove() }
 
   for (var i=0; i<NB; i++) {
     // The button group
     var b = G.group().move(i * 200 + 100, Gbut)
+    Buttons[i] = b
 
     // The blue/white rectangle.
     var br = b.rect(100, 100)
@@ -119,7 +123,6 @@ function BuildButtons() {
     })(b, i)
     br.click(ClickFn)
     bt.click(ClickFn)
-    Buttons[i] = b
   }
 }
 
@@ -131,11 +134,17 @@ LettersW = {}
 
 function RenderLetters() {
   var i
+  for (i=0; i<LettersW.length; i++) {
+    if (i in LettersW) { LettersW[i].remove() }
+  }
+  LettersW = []
   for (i=0; i<Letters.length; i++) {
-    LettersW[i] = G.text(Letters[i])
+    LettersW.push(
+      G.text(Letters[i])
         .move(GdispX + GdispTab + i*GdispGap, GdispY+GdispV)
         .leading(1.1)
         .font({family: 'Helvetica', size: 80, anchor: 'left'})
+    )
   }
 }
 
@@ -153,33 +162,121 @@ function Leapfrog() {
   chain = []
   if (Letters[0]=='1') {
     // Special case for '1'.
-    Leaper.animate().move(GdispX + GdispTab, GdispY+0*GdispV).after(function() {
-      LettersW[0].animate().move(GdispX + GdispTab, GH)
+    Leaper.animate(D).move(GdispX + GdispTab, GdispY+0*GdispV).after(function() {
+      LettersW[0].animate(D).move(GdispX + GdispTab, GH)
     })
-    Letters = [ c ]
+    newLetters = [c]
   } else {
     // Figure out where the letter drops.
     for (var i = ll-1; i>=0; i--) {
       var d = Letters[i]
+      var negative = false
       if (d <= c) {
         break  // Found the right place.
       } else {
-        (function(i2){
-          chain.push(function(){return LettersW[i2].animate().move(GdispX + GdispTab + (i2+1)*GdispGap, GdispY+GdispV)})
-          chain.push(function(){
-            var dash = G.text('-')
-                 .move(GdispX + GdispTab + (i2+1)*GdispGap, GdispY+GdispV)
-                 .leading(1.1)
-                 .font({family: 'Helvetica', size: 80, anchor: 'left'})
-            return dash.animate().move(0, GdispY+GdispV)
-          })
+        negative = true
+        // Letter moves right, out of the way.
+        ;(function(i2){
+          chain.push(function(){return LettersW[i2].animate(D).move(GdispX + GdispTab + (i2+1)*GdispGap, GdispY+GdispV)})
         })(i)
       }
-      (function(i2){
-        chain.push(function(){return Leaper.animate().move(GdispX + GdispTab + (i2)*GdispGap, GdispY+0*GdispV)})
+      ;(function(i2){
+        // Leaper moves.
+        chain.push(function(){return Leaper.animate(D).move(GdispX + GdispTab + (i2)*GdispGap, GdispY+0*GdispV)})
       })(i)
+      if (negative) {
+        Negs ++
+        ;(function(i2, negs2){
+            // Dash flies.
+            var signX = GdispX + GdispTab - negs2 * GdispGap
+            chain.push(function(){
+              NegsW[negs2] = G.text('-')
+                   .move(GdispX + GdispTab + (i2+0)*GdispGap, GdispY+0*GdispV)
+                   .leading(1.1)
+                   .font({family: 'Helvetica', size: 80, anchor: 'left'})
+              return NegsW[negs2].animate(D).move(signX, GdispY+GdispV)
+            })
+        })(i, Negs)
+      }
+    }
+
+    // Annihilate?
+    if (c == d) {
+      Negs ++
+
+      ;(function(i2, negs2){
+        // d moves up to meet
+        chain.push(function(){return LettersW[i2].animate(D).move(GdispX + GdispTab + (i2+0)*GdispGap, GdispY)})
+    
+        // Dash files out.
+        chain.push(function(){
+          NegsW[negs2] = G.text('-')
+               .move(GdispX + GdispTab + (i2+0)*GdispGap, GdispY+0*GdispV)
+               .leading(1.1)
+               .font({family: 'Helvetica', size: 80, anchor: 'left'})
+
+          var signX = GdispX + GdispTab - negs2 * GdispGap
+          return NegsW[negs2].animate(D).move(signX, GdispY+GdispV)
+        })
+
+        chain.push(function(){
+          Leaper.animate(D).move(GdispX + GdispTab + (i2+1)*GdispGap, -100)
+          return LettersW[i2].animate(D).move(GdispX + GdispTab + (i2+0)*GdispGap, -100)
+        })
+
+        if (i2+1 < ll) {
+          chain.push(function(){
+            var z = null
+            for (j=i2+1; j<ll; j++) {
+              // Slide back 2 into place.
+              z = LettersW[j].animate(D).move(GdispX + GdispTab + (j-1)*GdispGap, GdispY+GdispV)
+            }
+            return z
+          })
+        }
+
+      })(i, Negs)
+
+      newLetters = []
+      for (var j=0; j<i; j++) {
+        newLetters.push(Letters[j])
+      }
+      for (var j=i+1; j<ll; j++) {
+        newLetters.push(Letters[j])
+      }
+    } else {
+      // No annihilation.
+      newLetters = []
+      for (var j=0; j<i; j++) {
+        newLetters.push(Letters[j])
+      }
+      newLetters.push(c)
+      for (var j=i; j<ll; j++) {
+        newLetters.push(Letters[j])
+      }
     }
   }
+
+  // Tear off pairs of minuse.
+  while (Negs > 1) {
+    ;(function(negs2){
+      chain.push(function(){
+        var signX = GdispX + GdispTab - (negs2-1) * GdispGap
+        NegsW[negs2-1].animate(D).move(signX, -100)
+        var signX = GdispX + GdispTab - negs2 * GdispGap
+        return NegsW[negs2].animate(D).move(signX, -100)
+      })
+    })(Negs)
+    Negs -= 2
+  }
+
+  chain.push(function(){
+    // Reset & Reactivate as final thing.
+    Letters = newLetters
+    BuildButtons()
+    RenderLetters()
+  })
+
   var fn = null
   for (var i = chain.length-1; i>=0; i--) {
     if (fn) {
