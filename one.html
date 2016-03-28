@@ -1,50 +1,18 @@
 <html>
   <head>
   </head>
-<body bgcolor="#555555">
+<body bgcolor="#ffbbff">
   <table border=1><tr><td>
     <svg id="main" width="900" height="500" xmlns="http://www.w3.org/2000/svg">
-      <circle id="redcircle" cx="5" cy="5" r="9" fill="red" />
+      <text x="10" y="50" style="font-size:30;">Trigintaduonian Basis Solitare &nbsp; &nbsp; Goal="abcde"</text>
   </svg>
 </table>
 
-<!-- script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.2.5/svg.min.js"></script -->
+<!-- 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.2.5/svg.min.js"></script>
+-->
 <script src="/home/strick/git/cayley_dickson/svg.min.225.js"></script>
 
-<script type="text/javascript" charset="utf-8">
-function getViewport() {
-
- var viewPortWidth;
- var viewPortHeight;
-
- // the more standards compliant browsers (mozilla/netscape/opera/IE7) use window.innerWidth and window.innerHeight
- if (typeof window.innerWidth != 'undefined') {
-   viewPortWidth = window.innerWidth,
-   viewPortHeight = window.innerHeight
- }
-
-// IE6 in standards compliant mode (i.e. with a valid doctype as the first line in the document)
- else if (typeof document.documentElement != 'undefined'
- && typeof document.documentElement.clientWidth !=
- 'undefined' && document.documentElement.clientWidth != 0) {
-    viewPortWidth = document.documentElement.clientWidth,
-    viewPortHeight = document.documentElement.clientHeight
- }
-
- // older versions of IE
- else {
-   viewPortWidth = document.getElementsByTagName('body')[0].clientWidth,
-   viewPortHeight = document.getElementsByTagName('body')[0].clientHeight
- }
- return [viewPortWidth, viewPortHeight];
-}
-</script>
-
-
-
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 <script type="text/javascript" charset="utf-8">
 if (!SVG.supported) {
   alert('Your browser does not support SVG.')
@@ -55,17 +23,19 @@ GW = 900
 GH = 500
 NB = 4
 GSetupTime = 400
-D = 500
+D = 900
 Ghead = 50  // header message
 Gfoot = 450  // footer message
 Gbut = Gfoot = 300 // footer buttons
 GdispX = 50   // Main display.
 GdispY = 100
-GheliX = 700  // Helipad location.
+GheliX = 700  // Heliport location.
 GheliY = GdispY+20
 GdispTab = 300 // 250
 GdispGap = 50
 GdispV = 50  // Vertical display gap
+Ready = false
+Score = 0
 
 // create svg drawing paper
 var G = SVG('main').size(GW, GH)
@@ -80,16 +50,21 @@ Buttons = {}
 FillActiveButton = '#fff'
 FillPassiveButton = '#0cc'
 
-CurrentCards = ['b', 'c', 'd', 'd']
+CurrentCards = [RandomCard(), RandomCard(), RandomCard(), RandomCard() ] 
 Chosen = -1
 Negs = 0
 NegsW = {}
 function BuildButtons() {
   //for (var i=0; i<NB; i++) { if (i in Buttons) Buttons[i].remove() }
   //for (i in Buttons) { Buttons[i].remove() }
+  var wasChosen = Chosen
+  Chosen = -1
 
   for (var i=0; i<NB; i++) {
-    if (Chosen >= 0 && Chosen != i) { continue }
+    if (i in Buttons) {
+      Buttons[i].first().fill(FillPassiveButton)
+    }
+    if (wasChosen >= 0 && wasChosen != i) { continue }
 
     // The button group
     var b = G.group().move(i * 200 + 100, Gbut)
@@ -117,9 +92,12 @@ function BuildButtons() {
     // Construct the ClickFn.
     ;(function (bb, ii) {
       ClickFn = (function() {
-        Chosen = ii
-        bb.first().fill(FillActiveButton)
-        bb.animate(GSetupTime).move(GheliX, GheliY).after(Leapfrog)
+        if (Ready) {
+          Ready = false
+          Chosen = ii
+          bb.first().fill(FillActiveButton)
+          bb.animate(GSetupTime).move(GheliX, GheliY).after(Leapfrog)
+        }
       })
     })(b, i)
     br.click(ClickFn)
@@ -132,6 +110,7 @@ Letters = [ '1' ]
 Minuses = [ ]
 Shuttle = null
 LettersW = {}
+ScoreW = null
 
 function RenderLetters() {
   var i
@@ -147,6 +126,12 @@ function RenderLetters() {
         .font({family: 'Helvetica', size: 80, anchor: 'left'})
     )
   }
+  if (ScoreW) {
+    ScoreW.remove()
+  }
+  ScoreW = G.text("Score: " + Score).move(GW-200, 0)
+    .leading(1.1)
+    .font({family: 'Helvetica', size: 40, anchor: 'center'})
 }
 
 Leaper = null
@@ -159,7 +144,8 @@ function Leapfrog() {
          .leading(1.1)
          .font({family: 'Helvetica', size: 80, anchor: 'left'})
 
-  Buttons[Chosen].first().next().remove()  // Remove letter from heliport.
+  // Buttons[Chosen].first().next().remove()  // Remove letter from heliport.
+  Buttons[Chosen].remove()  // Remove letter from heliport.
 
   // First slide left near letters
   chain.push(function(){
@@ -172,28 +158,26 @@ function Leapfrog() {
       return Leaper.animate(D).move(GdispX + GdispTab, GdispY+0*GdispV)
     })
     chain.push(function(){
-      return LettersW[0].animate(D).move(GdispX + GdispTab, GH)
+      return LettersW[0].animate(D).move(GdispX + GdispTab, -100)
     })
     newLetters = [c]
   } else {
     // Figure out where the letter drops.
     for (var i = ll-1; i>=0; i--) {
       var d = Letters[i]
-      var negative = false
       if (d <= c) {
         break  // Found the right place.
-      } else {
-        negative = true
-        // Letter moves right, out of the way.
-        ;(function(i2){
-          chain.push(function(){return LettersW[i2].animate(D).move(GdispX + GdispTab + (i2+1)*GdispGap, GdispY+GdispV)})
-        })(i)
       }
+
+      // Letter moves right, out of the way.
+      ;(function(i2){
+        chain.push(function(){return LettersW[i2].animate(D).move(GdispX + GdispTab + (i2+1)*GdispGap, GdispY+GdispV)})
+      })(i)
+      
       ;(function(i2){
         // Leaper moves.
         chain.push(function(){return Leaper.animate(D).move(GdispX + GdispTab + (i2)*GdispGap, GdispY+0*GdispV)})
       })(i)
-      if (negative) {
         Negs ++
         ;(function(i2, negs2){
             // Dash flies.
@@ -206,7 +190,6 @@ function Leapfrog() {
               return NegsW[negs2].animate(D).move(signX, GdispY+GdispV)
             })
         })(i, Negs)
-      }
     }
 
     // Annihilate?
@@ -283,15 +266,19 @@ function Leapfrog() {
   }
 
   chain.push(function(){
+    Score++
     // Reset & Reactivate as final thing.
+    Ready = false
     CurrentCards[Chosen] = RandomCard()
     Leaper.remove()
 
     Letters = newLetters
     BuildButtons()
     RenderLetters()
+    Ready = true
   })
 
+  // Assemble the chain into a single lambda, which chains via after().
   var fn = null
   for (var i = chain.length-1; i>=0; i--) {
     if (fn) {
@@ -302,6 +289,7 @@ function Leapfrog() {
       fn = chain[i]
     }
   }
+  // Execute the lambda.
   if (fn) {fn()}
 }
 
@@ -312,6 +300,6 @@ function RandomCard() {
 
 BuildButtons()
 RenderLetters()
-
+Ready = true
 
 </script>
