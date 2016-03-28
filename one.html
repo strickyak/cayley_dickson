@@ -58,10 +58,13 @@ GSetupTime = 400
 Ghead = 50  // header message
 Gfoot = 450  // footer message
 Gbut = Gfoot = 300 // footer buttons
-GdispY = 100 // main drawing region
-GdispX = 50
+GdispX = 50   // Main display.
+GdispY = 100
 GheliX = 700  // Helipad location.
 GheliY = GdispY+20
+GdispTab = 250
+GdispGap = 50
+GdispV = 50  // Vertical display gap
 
 // create svg drawing paper
 var G = SVG('main').size(GW, GH)
@@ -76,67 +79,122 @@ Buttons = {}
 FillActiveButton = '#fff'
 FillPassiveButton = '#0cc'
 
-Moving = {}
+CurrentCards = ['b', 'c', 'd', 'd']
+Chosen = null
 function BuildButtons() {
-  for (i=0; i<NB; i++) {
-    Moving[i] = false
-    b = G.group().move(i * 200 + 100, Gbut)
-    br = b.rect(100, 100)
+  Chosen = -1  // None chosen yet.  Remove old buttons.
+  //for (var i=0; i<NB; i++) { if (i in Buttons) Buttons[i].remove() }
+  for (i in Buttons) { Buttons[i].remove() }
+
+  for (var i=0; i<NB; i++) {
+    // The button group
+    var b = G.group().move(i * 200 + 100, Gbut)
+
+    // The blue/white rectangle.
+    var br = b.rect(100, 100)
          .fill(FillPassiveButton)
          .mouseover(function() { this.fill(FillActiveButton) })
-         .mouseout (function() { if (!Moving[this.i]) {this.fill(FillPassiveButton)} })
+         .mouseout (function() { if (this.i != Chosen) {this.fill(FillPassiveButton)} })
     br.i = i
-    bt = b.text('' + i)
+
+    // The letter.
+    var bt = b.text(CurrentCards[i])
          .move(50, 0)
          .leading(1.1)
          .font({ family: 'Helvetica', size: 80, anchor: 'middle'})
          .mouseover(function() { this.parent().first().fill(FillActiveButton) })
-         .mouseout (function() { if (!Moving[this.i]) this.parent().first().fill(FillPassiveButton) })
+         .mouseout (function() { if (this.i != Chosen) this.parent().first().fill(FillPassiveButton) })
     bt.i = i
-    b.move(i * 200 + 100, GH)
+
+    b.move(i * 200 + 100, GH)  // Arise from below.
     b.animate(GSetupTime).move(i * 200 + 100, Gbut)
+
+    // Construct the ClickFn.
     ;(function (bb, ii) {
-      clickFn = (function() {
-        Moving[ii] = true
+      ClickFn = (function() {
+        Chosen = ii
         bb.first().fill(FillActiveButton)
-        bb.animate(GSetupTime).move(GheliX, GheliY)
+        bb.animate(GSetupTime).move(GheliX, GheliY).after(Leapfrog)
       })
     })(b, i)
-    br.click(clickFn)
-    bt.click(clickFn)
+    br.click(ClickFn)
+    bt.click(ClickFn)
     Buttons[i] = b
   }
 }
 
-Letters = [ "a", "b", "c", "d", "e" ]
+Letters = [ '1' ]
+Letters = [ 'a', 'b', 'c', 'd', 'e' ]
 Minuses = [ ]
 Shuttle = null
 LettersW = {}
 
-LetterGroup = null
 function RenderLetters() {
-  if (LetterGroup) { LetterGroup.remove() }
-  LetterGroup = Display.group()
   var i
   for (i=0; i<Letters.length; i++) {
-    LetterGroup.text(Letters[i])
-        .move(50 + i*50, 50)
-        .font({ family: 'Helvetica', size: 80, anchor: 'left'})
+    LettersW[i] = G.text(Letters[i])
+        .move(GdispX + GdispTab + i*GdispGap, GdispY+GdispV)
         .leading(1.1)
+        .font({family: 'Helvetica', size: 80, anchor: 'left'})
   }
+}
+
+Leaper = null
+function Leapfrog() {
+  var c = CurrentCards[Chosen]
+  Leaper = G.text(c)
+         .move(GheliX, GdispY+GdispV)
+         .leading(1.1)
+         .font({family: 'Helvetica', size: 80, anchor: 'left'})
+
+  Buttons[Chosen].first().next().remove()  // Remove letter from heliport.
+
+  var ll = Letters.length 
+  chain = []
+  if (Letters[0]=='1') {
+    // Special case for '1'.
+    Leaper.animate().move(GdispX + GdispTab, GdispY+0*GdispV).after(function() {
+      LettersW[0].animate().move(GdispX + GdispTab, GH)
+    })
+    Letters = [ c ]
+  } else {
+    // Figure out where the letter drops.
+    for (var i = ll-1; i>=0; i--) {
+      var d = Letters[i]
+      if (d <= c) {
+        break  // Found the right place.
+      } else {
+        (function(i2){
+          chain.push(function(){return LettersW[i2].animate().move(GdispX + GdispTab + (i2+1)*GdispGap, GdispY+GdispV)})
+          chain.push(function(){
+            var dash = G.text('-')
+                 .move(GdispX + GdispTab + (i2+1)*GdispGap, GdispY+GdispV)
+                 .leading(1.1)
+                 .font({family: 'Helvetica', size: 80, anchor: 'left'})
+            return dash.animate().move(0, GdispY+GdispV)
+          })
+        })(i)
+      }
+      (function(i2){
+        chain.push(function(){return Leaper.animate().move(GdispX + GdispTab + (i2)*GdispGap, GdispY+0*GdispV)})
+      })(i)
+    }
+  }
+  var fn = null
+  for (var i = chain.length-1; i>=0; i--) {
+    if (fn) {
+      (function(i2, fn2){
+        fn = (function(){return chain[i2]().after(fn2) })
+      })(i, fn)
+    } else {
+      fn = chain[i]
+    }
+  }
+  if (fn) {fn()}
 }
 
 BuildButtons()
 RenderLetters()
 
-/*
-Text = {}
-for (i=0; i < 20; i++) {
-  t = Display.text('' + (i % 10)).move(i*50, 0)
-          .font({ family: 'Helvetica', size: 80, anchor: 'left'})
-          .animate(200).move(i*50, 50).loop(1, true)
-  Text = t
-}
-*/
 
 </script>
