@@ -1,0 +1,165 @@
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+</head>
+
+<body>
+<h1>Trans-Sedenion Medtation with the Moufang Clan</h1>
+
+<h3>or</h3>
+
+<h2>Three Discoveries in Multiplying Trigintaduonion Bases</h2>
+
+<ul>
+<li>Annihilating-Leapfrog Identity</li>
+<li>Letter-Gap Symmetry</li>
+<li>Multiplying by Dissociate-Then-Fix</li>
+</ul>
+
+<h2>My Application: a C*ndyl*and game.</h2>
+
+<p>Instead of taking whole number steps from START to FINISH,
+our board positions are trigintaduonion numbers,
+and we multiply (instead of add) steps to get from 1 to FINISH.</p>
+
+<ul>
+<li>Multiplayer board game: “Cayley-Dickson Trans-Sedenion Hyper-Complex C*nadyl*and”</li>
+<li>Solitare web page.</li>
+</ul>
+
+<h2>Hyper-Complex Summary</h2>
+
+<table>
+<tr><td> real<br>dimensions <td> imaginary<br>dimensions <td> total<br>dimensions <td> Name
+<tr><td>         1 <td>              0 <td>          1 <td> Real Numbers
+<tr><td>         1 <td>              1 <td>          2 <td> Complex Numbers
+<tr><td>         1 <td>              3 <td>          4 <td> Quaternions
+<tr><td>         1 <td>              7 <td>          8 <td> Octonions
+<tr><td>         1 <td>             15 <td>         16 <td> Sedenions
+<tr><td>         1 <td>             31 <td>         32 <td> Trigintaduonions
+</table>
+
+<h2>How we will write the bases:</h2>
+
+<h3>1 Real Number</h3>
+
+<p>1</p>
+
+<h3>2 Complex Numbers</h3>
+
+<p>1, a</p>
+
+<h3>4 Quaternions</h3>
+
+<p>1, a, b, ab</p>
+
+<h3>8 Octonions</h3>
+
+<p>1, a, b, ab, c, ac, bc, abc</p>
+
+<h3>16 Sedenions</h3>
+
+<p>1, a, b, ab, c, ac, bc, abc, d, ad, bd, abd, cd, acd, bcd, abcd</p>
+
+<h3>32 Trigintaduonions</h3>
+
+<p>1, a, b, ab, c, ac, bc, abc, d, ad, bd, abd, cd, acd, bcd, abcd,
+e, ae, be, abe, ce, ace, bce, abce, de, ade, bde, abde, cde, acde, bcde, abcde</p>
+
+<h2>From here on, we use the Trigintaduonion Bases (and their negatives) for multiplication.</h2>
+
+<p>(But it would apply generally to any hyper-complex system.)</p>
+
+<p><em>Multiplication is defined by the usual Cayley-Dickson Construction</em>
+<em>(see Wikipedia or “The Octonions” by John C. Baez [2001].)</em></p>
+
+<p>Our convention: Associate Left-to-Right: “abcde” means “(((ab)c)d)e”</p>
+
+<p>Canonically we write our imaginary bases with letters…</p>
+
+<ul>
+<li>in alphabetical order</li>
+<li>no duplicates</li>
+</ul>
+
+<h3>Warnings:</h3>
+
+<ul>
+<li>Not commutative …… don’t assume xy = yx</li>
+<li>Not associative …… don’t assume x(yz) = (xy)z</li>
+<li>Not Moufang …… don’t assume (zx)(yz) = z(xy)z</li>
+<li>Not alternative …… don’t assume x(xy) = (xx)y</li>
+</ul>
+
+<h3>The good news:</h3>
+
+<p>The set of 32 bases and their 32 negatives is closed under multiplication.</p>
+
+<p>Multiplying by 1 and -1 work as we want (on left or right).</p>
+
+<p>Also multiplying any basis (except 1) by itself gives -1 (that is, the letter bases are all imaginary).</p>
+
+<p>Multiplying 1 or -1 by itself gives 1.  (They are real.)</p>
+
+<h1>Annihilating-Leapfrog Identity</h1>
+
+<p>But it only works for a single-letter multiplier!</p>
+
+<p>Examples:</p>
+
+<pre><code>        acx(b)  =  a (b) -c -x  =  --abcx  =  abcx
+
+        acx(c)  =  a  c(c) -x  =  a (-) -x  =  --ax  =  ax
+</code></pre>
+
+<p><em>Jump the multiplier over letters from right to left, until it is in alphabetical order,</em>
+<em>adding a minus sign every time you leap.</em></p>
+
+<p><em>Then repeated letters annihilate and become a minus sign.</em></p>
+
+<h1>Letter-Gap Symmetry</h1>
+
+<p><em>(Related to index-cycling &amp; index-doubling, but different.)</em></p>
+
+<p>Suppose you already know</p>
+
+<pre><code>        abc(ac) = -b
+</code></pre>
+
+<p>but you now want to know what is</p>
+
+<pre><code>        bde(be) = ?
+</code></pre>
+
+<p>You can reassign letters (introduce or remove gaps) with lines
+from old to new letters, but do not cross the lines!</p>
+
+<pre><code>        a b c d e      abc(ac) = -b
+         \ \ \         ||| ||     |
+          | \ \        ||| ||     |
+          |  \ \       ||| ||     |
+        a b c d e      bde(be) = -d
+</code></pre>
+
+<p>If you cross the lines, you might prove that “ab = ba” which is wrong!</p>
+
+<h1>Multiplying by Dissociate-Then-Fix</h1>
+
+<p>Here’s a Twist Table for multiplying trigintaduonion bases:</p>
+
+<p>LINK</p>
+
+<p>Here’s another Twist Table, for fixing “Dissociations”:</p>
+
+<p>LINK</p>
+
+<p>Dissociating is what I call removing the parentheses in this case:</p>
+
+<p>Say you want to multiply <em>bcd</em> by <em>de</em>.  Drop the parentheses,
+and use the Annihilating Leapfrog technique to absorb these extra letters
+and canonicalize the result:</p>
+
+<pre><code>        bcd(de)
+</code></pre>
+
