@@ -333,29 +333,69 @@ def Alphabet(n):
     i += 1
   return s
 
-#def PrintAbsoluteTable(n, ht):
-#  alfa = Alphabet(n)
-#  N = [BasisVec(n, i) for i in range(n)]
-#  D, T = {}, {}
-#  left2right = AssignNames(D, T, N, alfa)
-#
-#  print >>ht, '<html><body><table border=1>'
-#  for i in range(n):
-#    a = N[i]
-#    ta = T[a]
-#    print >>ht, '<tr>'
-#    for j in range(n):
-#      b = N[j]
-#      tb = T[b]
-#      prod = mul(b, a)  # Proper multiplication.
-#      tprod = T[prod]
-#      if tprod.startswith('-'):
-#        print >>ht, '<td bgcolor="grey">', tprod
-#      else:
-#        print >>ht, '<td>', tprod
-#  print >>ht, '</table><br>'
-#  
-#
+def PrintTwistTable(n):
+  alfa = Alphabet(n)
+  N = [BasisVec(n, i) for i in range(n)]
+  D, T = {}, {}
+  left2right = AssignNames(D, T, N, alfa)
+
+  print '<html><body>'
+  print '<h2>Twist Table for Multiplication</h2>'
+  print '<table border=1>'
+  ng, nw = 0, 0
+  for i in range(n):
+    a = N[i]
+    ta = T[a]
+    print '<tr>'
+    for j in range(n):
+      b = N[j]
+      tb = T[b]
+      prod = mul(b, a)  # Proper multiplication.
+      tprod = T[prod]
+      if tprod.startswith('-'):
+        print '<td bgcolor="grey">', tprod
+        ng += 1
+      else:
+        print '<td>', tprod
+        nw += 1
+  print '</table><br>'
+  print 'Gray marks negative products.  '
+  print '%d white, %s gray, %s total.' % (nw, ng, nw+ng)
+  print '<br><br><br>'
+  print '<h2>Twist Table for Fixing Dissociatiion</h2>'
+  print '<html><body><table border=1>'
+  ng, nw = 0, 0
+  for i in range(n):
+    a = N[i]
+    ta = T[a]
+    print '<tr>'
+    for j in range(n):
+      b = N[j]
+      tb = T[b]
+
+      prod = mul(b, a)  # Proper multiplication.
+      tprod = T[prod]
+
+      jam = N[0]        # Jamming multiplication.
+      for c in T[a] + T[b]:
+        if c == '-':
+          jam = neg(jam)
+        else:
+          jam = mul(D[c], jam)
+
+      if prod == jam:
+        print '<td>', tprod
+        nw += 1
+      elif prod == neg(jam):
+        print '<td bgcolor="grey">', tprod
+        ng += 1
+      else:
+        raise Exception('wtf: %s vs %s' % (tprod, T[jam]))
+  print '</table><br>'
+  print 'Gray marks extra -1 is required for the product. '
+  print '%d white, %s gray, %s total.' % (nw, ng, nw+ng)
+  
+
 #def Calculate(n, *v):
 #  alfa = Alphabet(n)
 #  N = [BasisVec(n, i) for i in range(n)]
@@ -1294,6 +1334,8 @@ if __name__ == '__main__':
     TryJammingConjecture(32)
   elif cmd == 'M':
     MoufagClanCheck(int(args[0]))
+  elif cmd == 'Twist':
+    PrintTwistTable(int(args[0]))
   elif cmd == 'Mul':
     FullMultiplicationTable(int(args[0]))
   elif cmd == 'MulTrim':

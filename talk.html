@@ -11,6 +11,8 @@
 
 <h2>Three Discoveries in Multiplying Trigintaduonion Bases</h2>
 
+<p>by Henry Strickland, 2016.</p>
+
 <ul>
 <li>Annihilating-Leapfrog Identity</li>
 <li>Letter-Gap Symmetry</li>
@@ -30,15 +32,19 @@ and we multiply (instead of add) steps to get from 1 to FINISH.</p>
 
 <h2>Hyper-Complex Summary</h2>
 
-<table>
-<tr><td> real<br>dimensions <td> imaginary<br>dimensions <td> total<br>dimensions <td> Name
-<tr><td>         1 <td>              0 <td>          1 <td> Real Numbers
-<tr><td>         1 <td>              1 <td>          2 <td> Complex Numbers
-<tr><td>         1 <td>              3 <td>          4 <td> Quaternions
-<tr><td>         1 <td>              7 <td>          8 <td> Octonions
-<tr><td>         1 <td>             15 <td>         16 <td> Sedenions
-<tr><td>         1 <td>             31 <td>         32 <td> Trigintaduonions
-</table>
+
+
+<pre><code> num         num     num
+ real  imagimary   total
+ dims       dims    dims    Name
+ ----       ----    ----    -----------------
+    1         0        1    Real Numbers
+    1         1        2    Complex Numbers
+    1         3        4    Quaternions
+    1         7        8    Octonions
+    1        15       16    Sedenions
+    1        31       32    Trigintaduonions
+</code></pre>
 
 <h2>How we will write the bases:</h2>
 
@@ -69,14 +75,14 @@ e, ae, be, abe, ce, ace, bce, abce, de, ade, bde, abde, cde, acde, bcde, abcde</
 
 <h2>From here on, we use the Trigintaduonion Bases (and their negatives) for multiplication.</h2>
 
-<p>(But it would apply generally to any hyper-complex system.)</p>
+<p><em>But it would apply generally to any hyper-complex system.</em></p>
 
 <p><em>Multiplication is defined by the usual Cayley-Dickson Construction</em>
 <em>(see Wikipedia or “The Octonions” by John C. Baez [2001].)</em></p>
 
 <p>Our convention: Associate Left-to-Right: “abcde” means “(((ab)c)d)e”</p>
 
-<p>Canonically we write our imaginary bases with letters…</p>
+<p>Canonically we write our imaginary bases with letters:</p>
 
 <ul>
 <li>in alphabetical order</li>
@@ -109,9 +115,17 @@ e, ae, be, abe, ce, ace, bce, abce, de, ade, bde, abde, cde, acde, bcde, abcde</
 <p>Examples:</p>
 
 <pre><code>        acx(b)  =  a (b) -c -x  =  --abcx  =  abcx
-
-        acx(c)  =  a  c(c) -x  =  a (-) -x  =  --ax  =  ax
 </code></pre>
+
+<p>To alphabetize, the (b) jumps over x and then c, producing a minus each time.</p>
+
+<pre><code>        acx(c)  =  a  c(c) -x  =  a (-) -x  =  --ax  =  ax
+</code></pre>
+
+<p>To alphabetize, the (c) jumps over x, producing a minus.
+Then it annihilates with the other c, producing a second minus.</p>
+
+<p>You end up with the product in canonical form: alphabetized and no duplicates.</p>
 
 <p><em>Jump the multiplier over letters from right to left, until it is in alphabetical order,</em>
 <em>adding a minus sign every time you leap.</em></p>
@@ -154,12 +168,2152 @@ from old to new letters, but do not cross the lines!</p>
 
 <p>LINK</p>
 
-<p>Dissociating is what I call removing the parentheses in this case:</p>
+<p>Dissociating is my name for removing parentheses.
+Remember that multiplication is not associative, so this can change the result,
+so we have to fix it later.</p>
 
 <p>Say you want to multiply <em>bcd</em> by <em>de</em>.  Drop the parentheses,
 and use the Annihilating Leapfrog technique to absorb these extra letters
 and canonicalize the result:</p>
 
-<pre><code>        bcd(de)
+<pre><code>        bce(de)
+        bce d e   ; dissociate d &amp; e
+        -bcde e     ; leapfrog the d (producing a minus)
+        -bcd(-)       ; annihilate the e (producing another minus)
+        bcd           ; cancel the minuses
 </code></pre>
 
+<p>However this is not the final answer, because dissociating is not safe.</p>
+
+<p>But we can look up the entry for “bcd” &amp; “de” in the Dissociating Twist Table,
+and we get -1.   So we multiply the entire result by it:</p>
+
+<pre><code>        (-1) bcd  =  -bcd
+</code></pre>
+
+<p>and that will be correct.</p>
+
+<html><body>
+<h2>Twist Table for Multiplication</h2>
+<table border=1>
+<tr>
+<td> 1
+<td> a
+<td> b
+<td> ab
+<td> c
+<td> ac
+<td> bc
+<td> abc
+<td> d
+<td> ad
+<td> bd
+<td> abd
+<td> cd
+<td> acd
+<td> bcd
+<td> abcd
+<td> e
+<td> ae
+<td> be
+<td> abe
+<td> ce
+<td> ace
+<td> bce
+<td> abce
+<td> de
+<td> ade
+<td> bde
+<td> abde
+<td> cde
+<td> acde
+<td> bcde
+<td> abcde
+<tr>
+<td> a
+<td bgcolor="grey"> -1
+<td> ab
+<td bgcolor="grey"> -b
+<td> ac
+<td bgcolor="grey"> -c
+<td bgcolor="grey"> -abc
+<td> bc
+<td> ad
+<td bgcolor="grey"> -d
+<td bgcolor="grey"> -abd
+<td> bd
+<td bgcolor="grey"> -acd
+<td> cd
+<td> abcd
+<td bgcolor="grey"> -bcd
+<td> ae
+<td bgcolor="grey"> -e
+<td bgcolor="grey"> -abe
+<td> be
+<td bgcolor="grey"> -ace
+<td> ce
+<td> abce
+<td bgcolor="grey"> -bce
+<td bgcolor="grey"> -ade
+<td> de
+<td> abde
+<td bgcolor="grey"> -bde
+<td> acde
+<td bgcolor="grey"> -cde
+<td bgcolor="grey"> -abcde
+<td> bcde
+<tr>
+<td> b
+<td bgcolor="grey"> -ab
+<td bgcolor="grey"> -1
+<td> a
+<td> bc
+<td> abc
+<td bgcolor="grey"> -c
+<td bgcolor="grey"> -ac
+<td> bd
+<td> abd
+<td bgcolor="grey"> -d
+<td bgcolor="grey"> -ad
+<td bgcolor="grey"> -bcd
+<td bgcolor="grey"> -abcd
+<td> cd
+<td> acd
+<td> be
+<td> abe
+<td bgcolor="grey"> -e
+<td bgcolor="grey"> -ae
+<td bgcolor="grey"> -bce
+<td bgcolor="grey"> -abce
+<td> ce
+<td> ace
+<td bgcolor="grey"> -bde
+<td bgcolor="grey"> -abde
+<td> de
+<td> ade
+<td> bcde
+<td> abcde
+<td bgcolor="grey"> -cde
+<td bgcolor="grey"> -acde
+<tr>
+<td> ab
+<td> b
+<td bgcolor="grey"> -a
+<td bgcolor="grey"> -1
+<td> abc
+<td bgcolor="grey"> -bc
+<td> ac
+<td bgcolor="grey"> -c
+<td> abd
+<td bgcolor="grey"> -bd
+<td> ad
+<td bgcolor="grey"> -d
+<td bgcolor="grey"> -abcd
+<td> bcd
+<td bgcolor="grey"> -acd
+<td> cd
+<td> abe
+<td bgcolor="grey"> -be
+<td> ae
+<td bgcolor="grey"> -e
+<td bgcolor="grey"> -abce
+<td> bce
+<td bgcolor="grey"> -ace
+<td> ce
+<td bgcolor="grey"> -abde
+<td> bde
+<td bgcolor="grey"> -ade
+<td> de
+<td> abcde
+<td bgcolor="grey"> -bcde
+<td> acde
+<td bgcolor="grey"> -cde
+<tr>
+<td> c
+<td bgcolor="grey"> -ac
+<td bgcolor="grey"> -bc
+<td bgcolor="grey"> -abc
+<td bgcolor="grey"> -1
+<td> a
+<td> b
+<td> ab
+<td> cd
+<td> acd
+<td> bcd
+<td> abcd
+<td bgcolor="grey"> -d
+<td bgcolor="grey"> -ad
+<td bgcolor="grey"> -bd
+<td bgcolor="grey"> -abd
+<td> ce
+<td> ace
+<td> bce
+<td> abce
+<td bgcolor="grey"> -e
+<td bgcolor="grey"> -ae
+<td bgcolor="grey"> -be
+<td bgcolor="grey"> -abe
+<td bgcolor="grey"> -cde
+<td bgcolor="grey"> -acde
+<td bgcolor="grey"> -bcde
+<td bgcolor="grey"> -abcde
+<td> de
+<td> ade
+<td> bde
+<td> abde
+<tr>
+<td> ac
+<td> c
+<td bgcolor="grey"> -abc
+<td> bc
+<td bgcolor="grey"> -a
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -ab
+<td> b
+<td> acd
+<td bgcolor="grey"> -cd
+<td> abcd
+<td bgcolor="grey"> -bcd
+<td> ad
+<td bgcolor="grey"> -d
+<td> abd
+<td bgcolor="grey"> -bd
+<td> ace
+<td bgcolor="grey"> -ce
+<td> abce
+<td bgcolor="grey"> -bce
+<td> ae
+<td bgcolor="grey"> -e
+<td> abe
+<td bgcolor="grey"> -be
+<td bgcolor="grey"> -acde
+<td> cde
+<td bgcolor="grey"> -abcde
+<td> bcde
+<td bgcolor="grey"> -ade
+<td> de
+<td bgcolor="grey"> -abde
+<td> bde
+<tr>
+<td> bc
+<td> abc
+<td> c
+<td bgcolor="grey"> -ac
+<td bgcolor="grey"> -b
+<td> ab
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -a
+<td> bcd
+<td bgcolor="grey"> -abcd
+<td bgcolor="grey"> -cd
+<td> acd
+<td> bd
+<td bgcolor="grey"> -abd
+<td bgcolor="grey"> -d
+<td> ad
+<td> bce
+<td bgcolor="grey"> -abce
+<td bgcolor="grey"> -ce
+<td> ace
+<td> be
+<td bgcolor="grey"> -abe
+<td bgcolor="grey"> -e
+<td> ae
+<td bgcolor="grey"> -bcde
+<td> abcde
+<td> cde
+<td bgcolor="grey"> -acde
+<td bgcolor="grey"> -bde
+<td> abde
+<td> de
+<td bgcolor="grey"> -ade
+<tr>
+<td> abc
+<td bgcolor="grey"> -bc
+<td> ac
+<td> c
+<td bgcolor="grey"> -ab
+<td bgcolor="grey"> -b
+<td> a
+<td bgcolor="grey"> -1
+<td> abcd
+<td> bcd
+<td bgcolor="grey"> -acd
+<td bgcolor="grey"> -cd
+<td> abd
+<td> bd
+<td bgcolor="grey"> -ad
+<td bgcolor="grey"> -d
+<td> abce
+<td> bce
+<td bgcolor="grey"> -ace
+<td bgcolor="grey"> -ce
+<td> abe
+<td> be
+<td bgcolor="grey"> -ae
+<td bgcolor="grey"> -e
+<td bgcolor="grey"> -abcde
+<td bgcolor="grey"> -bcde
+<td> acde
+<td> cde
+<td bgcolor="grey"> -abde
+<td bgcolor="grey"> -bde
+<td> ade
+<td> de
+<tr>
+<td> d
+<td bgcolor="grey"> -ad
+<td bgcolor="grey"> -bd
+<td bgcolor="grey"> -abd
+<td bgcolor="grey"> -cd
+<td bgcolor="grey"> -acd
+<td bgcolor="grey"> -bcd
+<td bgcolor="grey"> -abcd
+<td bgcolor="grey"> -1
+<td> a
+<td> b
+<td> ab
+<td> c
+<td> ac
+<td> bc
+<td> abc
+<td> de
+<td> ade
+<td> bde
+<td> abde
+<td> cde
+<td> acde
+<td> bcde
+<td> abcde
+<td bgcolor="grey"> -e
+<td bgcolor="grey"> -ae
+<td bgcolor="grey"> -be
+<td bgcolor="grey"> -abe
+<td bgcolor="grey"> -ce
+<td bgcolor="grey"> -ace
+<td bgcolor="grey"> -bce
+<td bgcolor="grey"> -abce
+<tr>
+<td> ad
+<td> d
+<td bgcolor="grey"> -abd
+<td> bd
+<td bgcolor="grey"> -acd
+<td> cd
+<td> abcd
+<td bgcolor="grey"> -bcd
+<td bgcolor="grey"> -a
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -ab
+<td> b
+<td bgcolor="grey"> -ac
+<td> c
+<td> abc
+<td bgcolor="grey"> -bc
+<td> ade
+<td bgcolor="grey"> -de
+<td> abde
+<td bgcolor="grey"> -bde
+<td> acde
+<td bgcolor="grey"> -cde
+<td bgcolor="grey"> -abcde
+<td> bcde
+<td> ae
+<td bgcolor="grey"> -e
+<td> abe
+<td bgcolor="grey"> -be
+<td> ace
+<td bgcolor="grey"> -ce
+<td bgcolor="grey"> -abce
+<td> bce
+<tr>
+<td> bd
+<td> abd
+<td> d
+<td bgcolor="grey"> -ad
+<td bgcolor="grey"> -bcd
+<td bgcolor="grey"> -abcd
+<td> cd
+<td> acd
+<td bgcolor="grey"> -b
+<td> ab
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -a
+<td bgcolor="grey"> -bc
+<td bgcolor="grey"> -abc
+<td> c
+<td> ac
+<td> bde
+<td bgcolor="grey"> -abde
+<td bgcolor="grey"> -de
+<td> ade
+<td> bcde
+<td> abcde
+<td bgcolor="grey"> -cde
+<td bgcolor="grey"> -acde
+<td> be
+<td bgcolor="grey"> -abe
+<td bgcolor="grey"> -e
+<td> ae
+<td> bce
+<td> abce
+<td bgcolor="grey"> -ce
+<td bgcolor="grey"> -ace
+<tr>
+<td> abd
+<td bgcolor="grey"> -bd
+<td> ad
+<td> d
+<td bgcolor="grey"> -abcd
+<td> bcd
+<td bgcolor="grey"> -acd
+<td> cd
+<td bgcolor="grey"> -ab
+<td bgcolor="grey"> -b
+<td> a
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -abc
+<td> bc
+<td bgcolor="grey"> -ac
+<td> c
+<td> abde
+<td> bde
+<td bgcolor="grey"> -ade
+<td bgcolor="grey"> -de
+<td> abcde
+<td bgcolor="grey"> -bcde
+<td> acde
+<td bgcolor="grey"> -cde
+<td> abe
+<td> be
+<td bgcolor="grey"> -ae
+<td bgcolor="grey"> -e
+<td> abce
+<td bgcolor="grey"> -bce
+<td> ace
+<td bgcolor="grey"> -ce
+<tr>
+<td> cd
+<td> acd
+<td> bcd
+<td> abcd
+<td> d
+<td bgcolor="grey"> -ad
+<td bgcolor="grey"> -bd
+<td bgcolor="grey"> -abd
+<td bgcolor="grey"> -c
+<td> ac
+<td> bc
+<td> abc
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -a
+<td bgcolor="grey"> -b
+<td bgcolor="grey"> -ab
+<td> cde
+<td bgcolor="grey"> -acde
+<td bgcolor="grey"> -bcde
+<td bgcolor="grey"> -abcde
+<td bgcolor="grey"> -de
+<td> ade
+<td> bde
+<td> abde
+<td> ce
+<td bgcolor="grey"> -ace
+<td bgcolor="grey"> -bce
+<td bgcolor="grey"> -abce
+<td bgcolor="grey"> -e
+<td> ae
+<td> be
+<td> abe
+<tr>
+<td> acd
+<td bgcolor="grey"> -cd
+<td> abcd
+<td bgcolor="grey"> -bcd
+<td> ad
+<td> d
+<td> abd
+<td bgcolor="grey"> -bd
+<td bgcolor="grey"> -ac
+<td bgcolor="grey"> -c
+<td> abc
+<td bgcolor="grey"> -bc
+<td> a
+<td bgcolor="grey"> -1
+<td> ab
+<td bgcolor="grey"> -b
+<td> acde
+<td> cde
+<td bgcolor="grey"> -abcde
+<td> bcde
+<td bgcolor="grey"> -ade
+<td bgcolor="grey"> -de
+<td bgcolor="grey"> -abde
+<td> bde
+<td> ace
+<td> ce
+<td bgcolor="grey"> -abce
+<td> bce
+<td bgcolor="grey"> -ae
+<td bgcolor="grey"> -e
+<td bgcolor="grey"> -abe
+<td> be
+<tr>
+<td> bcd
+<td bgcolor="grey"> -abcd
+<td bgcolor="grey"> -cd
+<td> acd
+<td> bd
+<td bgcolor="grey"> -abd
+<td> d
+<td> ad
+<td bgcolor="grey"> -bc
+<td bgcolor="grey"> -abc
+<td bgcolor="grey"> -c
+<td> ac
+<td> b
+<td bgcolor="grey"> -ab
+<td bgcolor="grey"> -1
+<td> a
+<td> bcde
+<td> abcde
+<td> cde
+<td bgcolor="grey"> -acde
+<td bgcolor="grey"> -bde
+<td> abde
+<td bgcolor="grey"> -de
+<td bgcolor="grey"> -ade
+<td> bce
+<td> abce
+<td> ce
+<td bgcolor="grey"> -ace
+<td bgcolor="grey"> -be
+<td> abe
+<td bgcolor="grey"> -e
+<td bgcolor="grey"> -ae
+<tr>
+<td> abcd
+<td> bcd
+<td bgcolor="grey"> -acd
+<td bgcolor="grey"> -cd
+<td> abd
+<td> bd
+<td bgcolor="grey"> -ad
+<td> d
+<td bgcolor="grey"> -abc
+<td> bc
+<td bgcolor="grey"> -ac
+<td bgcolor="grey"> -c
+<td> ab
+<td> b
+<td bgcolor="grey"> -a
+<td bgcolor="grey"> -1
+<td> abcde
+<td bgcolor="grey"> -bcde
+<td> acde
+<td> cde
+<td bgcolor="grey"> -abde
+<td bgcolor="grey"> -bde
+<td> ade
+<td bgcolor="grey"> -de
+<td> abce
+<td bgcolor="grey"> -bce
+<td> ace
+<td> ce
+<td bgcolor="grey"> -abe
+<td bgcolor="grey"> -be
+<td> ae
+<td bgcolor="grey"> -e
+<tr>
+<td> e
+<td bgcolor="grey"> -ae
+<td bgcolor="grey"> -be
+<td bgcolor="grey"> -abe
+<td bgcolor="grey"> -ce
+<td bgcolor="grey"> -ace
+<td bgcolor="grey"> -bce
+<td bgcolor="grey"> -abce
+<td bgcolor="grey"> -de
+<td bgcolor="grey"> -ade
+<td bgcolor="grey"> -bde
+<td bgcolor="grey"> -abde
+<td bgcolor="grey"> -cde
+<td bgcolor="grey"> -acde
+<td bgcolor="grey"> -bcde
+<td bgcolor="grey"> -abcde
+<td bgcolor="grey"> -1
+<td> a
+<td> b
+<td> ab
+<td> c
+<td> ac
+<td> bc
+<td> abc
+<td> d
+<td> ad
+<td> bd
+<td> abd
+<td> cd
+<td> acd
+<td> bcd
+<td> abcd
+<tr>
+<td> ae
+<td> e
+<td bgcolor="grey"> -abe
+<td> be
+<td bgcolor="grey"> -ace
+<td> ce
+<td> abce
+<td bgcolor="grey"> -bce
+<td bgcolor="grey"> -ade
+<td> de
+<td> abde
+<td bgcolor="grey"> -bde
+<td> acde
+<td bgcolor="grey"> -cde
+<td bgcolor="grey"> -abcde
+<td> bcde
+<td bgcolor="grey"> -a
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -ab
+<td> b
+<td bgcolor="grey"> -ac
+<td> c
+<td> abc
+<td bgcolor="grey"> -bc
+<td bgcolor="grey"> -ad
+<td> d
+<td> abd
+<td bgcolor="grey"> -bd
+<td> acd
+<td bgcolor="grey"> -cd
+<td bgcolor="grey"> -abcd
+<td> bcd
+<tr>
+<td> be
+<td> abe
+<td> e
+<td bgcolor="grey"> -ae
+<td bgcolor="grey"> -bce
+<td bgcolor="grey"> -abce
+<td> ce
+<td> ace
+<td bgcolor="grey"> -bde
+<td bgcolor="grey"> -abde
+<td> de
+<td> ade
+<td> bcde
+<td> abcde
+<td bgcolor="grey"> -cde
+<td bgcolor="grey"> -acde
+<td bgcolor="grey"> -b
+<td> ab
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -a
+<td bgcolor="grey"> -bc
+<td bgcolor="grey"> -abc
+<td> c
+<td> ac
+<td bgcolor="grey"> -bd
+<td bgcolor="grey"> -abd
+<td> d
+<td> ad
+<td> bcd
+<td> abcd
+<td bgcolor="grey"> -cd
+<td bgcolor="grey"> -acd
+<tr>
+<td> abe
+<td bgcolor="grey"> -be
+<td> ae
+<td> e
+<td bgcolor="grey"> -abce
+<td> bce
+<td bgcolor="grey"> -ace
+<td> ce
+<td bgcolor="grey"> -abde
+<td> bde
+<td bgcolor="grey"> -ade
+<td> de
+<td> abcde
+<td bgcolor="grey"> -bcde
+<td> acde
+<td bgcolor="grey"> -cde
+<td bgcolor="grey"> -ab
+<td bgcolor="grey"> -b
+<td> a
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -abc
+<td> bc
+<td bgcolor="grey"> -ac
+<td> c
+<td bgcolor="grey"> -abd
+<td> bd
+<td bgcolor="grey"> -ad
+<td> d
+<td> abcd
+<td bgcolor="grey"> -bcd
+<td> acd
+<td bgcolor="grey"> -cd
+<tr>
+<td> ce
+<td> ace
+<td> bce
+<td> abce
+<td> e
+<td bgcolor="grey"> -ae
+<td bgcolor="grey"> -be
+<td bgcolor="grey"> -abe
+<td bgcolor="grey"> -cde
+<td bgcolor="grey"> -acde
+<td bgcolor="grey"> -bcde
+<td bgcolor="grey"> -abcde
+<td> de
+<td> ade
+<td> bde
+<td> abde
+<td bgcolor="grey"> -c
+<td> ac
+<td> bc
+<td> abc
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -a
+<td bgcolor="grey"> -b
+<td bgcolor="grey"> -ab
+<td bgcolor="grey"> -cd
+<td bgcolor="grey"> -acd
+<td bgcolor="grey"> -bcd
+<td bgcolor="grey"> -abcd
+<td> d
+<td> ad
+<td> bd
+<td> abd
+<tr>
+<td> ace
+<td bgcolor="grey"> -ce
+<td> abce
+<td bgcolor="grey"> -bce
+<td> ae
+<td> e
+<td> abe
+<td bgcolor="grey"> -be
+<td bgcolor="grey"> -acde
+<td> cde
+<td bgcolor="grey"> -abcde
+<td> bcde
+<td bgcolor="grey"> -ade
+<td> de
+<td bgcolor="grey"> -abde
+<td> bde
+<td bgcolor="grey"> -ac
+<td bgcolor="grey"> -c
+<td> abc
+<td bgcolor="grey"> -bc
+<td> a
+<td bgcolor="grey"> -1
+<td> ab
+<td bgcolor="grey"> -b
+<td bgcolor="grey"> -acd
+<td> cd
+<td bgcolor="grey"> -abcd
+<td> bcd
+<td bgcolor="grey"> -ad
+<td> d
+<td bgcolor="grey"> -abd
+<td> bd
+<tr>
+<td> bce
+<td bgcolor="grey"> -abce
+<td bgcolor="grey"> -ce
+<td> ace
+<td> be
+<td bgcolor="grey"> -abe
+<td> e
+<td> ae
+<td bgcolor="grey"> -bcde
+<td> abcde
+<td> cde
+<td bgcolor="grey"> -acde
+<td bgcolor="grey"> -bde
+<td> abde
+<td> de
+<td bgcolor="grey"> -ade
+<td bgcolor="grey"> -bc
+<td bgcolor="grey"> -abc
+<td bgcolor="grey"> -c
+<td> ac
+<td> b
+<td bgcolor="grey"> -ab
+<td bgcolor="grey"> -1
+<td> a
+<td bgcolor="grey"> -bcd
+<td> abcd
+<td> cd
+<td bgcolor="grey"> -acd
+<td bgcolor="grey"> -bd
+<td> abd
+<td> d
+<td bgcolor="grey"> -ad
+<tr>
+<td> abce
+<td> bce
+<td bgcolor="grey"> -ace
+<td bgcolor="grey"> -ce
+<td> abe
+<td> be
+<td bgcolor="grey"> -ae
+<td> e
+<td bgcolor="grey"> -abcde
+<td bgcolor="grey"> -bcde
+<td> acde
+<td> cde
+<td bgcolor="grey"> -abde
+<td bgcolor="grey"> -bde
+<td> ade
+<td> de
+<td bgcolor="grey"> -abc
+<td> bc
+<td bgcolor="grey"> -ac
+<td bgcolor="grey"> -c
+<td> ab
+<td> b
+<td bgcolor="grey"> -a
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -abcd
+<td bgcolor="grey"> -bcd
+<td> acd
+<td> cd
+<td bgcolor="grey"> -abd
+<td bgcolor="grey"> -bd
+<td> ad
+<td> d
+<tr>
+<td> de
+<td> ade
+<td> bde
+<td> abde
+<td> cde
+<td> acde
+<td> bcde
+<td> abcde
+<td> e
+<td bgcolor="grey"> -ae
+<td bgcolor="grey"> -be
+<td bgcolor="grey"> -abe
+<td bgcolor="grey"> -ce
+<td bgcolor="grey"> -ace
+<td bgcolor="grey"> -bce
+<td bgcolor="grey"> -abce
+<td bgcolor="grey"> -d
+<td> ad
+<td> bd
+<td> abd
+<td> cd
+<td> acd
+<td> bcd
+<td> abcd
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -a
+<td bgcolor="grey"> -b
+<td bgcolor="grey"> -ab
+<td bgcolor="grey"> -c
+<td bgcolor="grey"> -ac
+<td bgcolor="grey"> -bc
+<td bgcolor="grey"> -abc
+<tr>
+<td> ade
+<td bgcolor="grey"> -de
+<td> abde
+<td bgcolor="grey"> -bde
+<td> acde
+<td bgcolor="grey"> -cde
+<td bgcolor="grey"> -abcde
+<td> bcde
+<td> ae
+<td> e
+<td> abe
+<td bgcolor="grey"> -be
+<td> ace
+<td bgcolor="grey"> -ce
+<td bgcolor="grey"> -abce
+<td> bce
+<td bgcolor="grey"> -ad
+<td bgcolor="grey"> -d
+<td> abd
+<td bgcolor="grey"> -bd
+<td> acd
+<td bgcolor="grey"> -cd
+<td bgcolor="grey"> -abcd
+<td> bcd
+<td> a
+<td bgcolor="grey"> -1
+<td> ab
+<td bgcolor="grey"> -b
+<td> ac
+<td bgcolor="grey"> -c
+<td bgcolor="grey"> -abc
+<td> bc
+<tr>
+<td> bde
+<td bgcolor="grey"> -abde
+<td bgcolor="grey"> -de
+<td> ade
+<td> bcde
+<td> abcde
+<td bgcolor="grey"> -cde
+<td bgcolor="grey"> -acde
+<td> be
+<td bgcolor="grey"> -abe
+<td> e
+<td> ae
+<td> bce
+<td> abce
+<td bgcolor="grey"> -ce
+<td bgcolor="grey"> -ace
+<td bgcolor="grey"> -bd
+<td bgcolor="grey"> -abd
+<td bgcolor="grey"> -d
+<td> ad
+<td> bcd
+<td> abcd
+<td bgcolor="grey"> -cd
+<td bgcolor="grey"> -acd
+<td> b
+<td bgcolor="grey"> -ab
+<td bgcolor="grey"> -1
+<td> a
+<td> bc
+<td> abc
+<td bgcolor="grey"> -c
+<td bgcolor="grey"> -ac
+<tr>
+<td> abde
+<td> bde
+<td bgcolor="grey"> -ade
+<td bgcolor="grey"> -de
+<td> abcde
+<td bgcolor="grey"> -bcde
+<td> acde
+<td bgcolor="grey"> -cde
+<td> abe
+<td> be
+<td bgcolor="grey"> -ae
+<td> e
+<td> abce
+<td bgcolor="grey"> -bce
+<td> ace
+<td bgcolor="grey"> -ce
+<td bgcolor="grey"> -abd
+<td> bd
+<td bgcolor="grey"> -ad
+<td bgcolor="grey"> -d
+<td> abcd
+<td bgcolor="grey"> -bcd
+<td> acd
+<td bgcolor="grey"> -cd
+<td> ab
+<td> b
+<td bgcolor="grey"> -a
+<td bgcolor="grey"> -1
+<td> abc
+<td bgcolor="grey"> -bc
+<td> ac
+<td bgcolor="grey"> -c
+<tr>
+<td> cde
+<td bgcolor="grey"> -acde
+<td bgcolor="grey"> -bcde
+<td bgcolor="grey"> -abcde
+<td bgcolor="grey"> -de
+<td> ade
+<td> bde
+<td> abde
+<td> ce
+<td bgcolor="grey"> -ace
+<td bgcolor="grey"> -bce
+<td bgcolor="grey"> -abce
+<td> e
+<td> ae
+<td> be
+<td> abe
+<td bgcolor="grey"> -cd
+<td bgcolor="grey"> -acd
+<td bgcolor="grey"> -bcd
+<td bgcolor="grey"> -abcd
+<td bgcolor="grey"> -d
+<td> ad
+<td> bd
+<td> abd
+<td> c
+<td bgcolor="grey"> -ac
+<td bgcolor="grey"> -bc
+<td bgcolor="grey"> -abc
+<td bgcolor="grey"> -1
+<td> a
+<td> b
+<td> ab
+<tr>
+<td> acde
+<td> cde
+<td bgcolor="grey"> -abcde
+<td> bcde
+<td bgcolor="grey"> -ade
+<td bgcolor="grey"> -de
+<td bgcolor="grey"> -abde
+<td> bde
+<td> ace
+<td> ce
+<td bgcolor="grey"> -abce
+<td> bce
+<td bgcolor="grey"> -ae
+<td> e
+<td bgcolor="grey"> -abe
+<td> be
+<td bgcolor="grey"> -acd
+<td> cd
+<td bgcolor="grey"> -abcd
+<td> bcd
+<td bgcolor="grey"> -ad
+<td bgcolor="grey"> -d
+<td bgcolor="grey"> -abd
+<td> bd
+<td> ac
+<td> c
+<td bgcolor="grey"> -abc
+<td> bc
+<td bgcolor="grey"> -a
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -ab
+<td> b
+<tr>
+<td> bcde
+<td> abcde
+<td> cde
+<td bgcolor="grey"> -acde
+<td bgcolor="grey"> -bde
+<td> abde
+<td bgcolor="grey"> -de
+<td bgcolor="grey"> -ade
+<td> bce
+<td> abce
+<td> ce
+<td bgcolor="grey"> -ace
+<td bgcolor="grey"> -be
+<td> abe
+<td> e
+<td bgcolor="grey"> -ae
+<td bgcolor="grey"> -bcd
+<td> abcd
+<td> cd
+<td bgcolor="grey"> -acd
+<td bgcolor="grey"> -bd
+<td> abd
+<td bgcolor="grey"> -d
+<td bgcolor="grey"> -ad
+<td> bc
+<td> abc
+<td> c
+<td bgcolor="grey"> -ac
+<td bgcolor="grey"> -b
+<td> ab
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -a
+<tr>
+<td> abcde
+<td bgcolor="grey"> -bcde
+<td> acde
+<td> cde
+<td bgcolor="grey"> -abde
+<td bgcolor="grey"> -bde
+<td> ade
+<td bgcolor="grey"> -de
+<td> abce
+<td bgcolor="grey"> -bce
+<td> ace
+<td> ce
+<td bgcolor="grey"> -abe
+<td bgcolor="grey"> -be
+<td> ae
+<td> e
+<td bgcolor="grey"> -abcd
+<td bgcolor="grey"> -bcd
+<td> acd
+<td> cd
+<td bgcolor="grey"> -abd
+<td bgcolor="grey"> -bd
+<td> ad
+<td bgcolor="grey"> -d
+<td> abc
+<td bgcolor="grey"> -bc
+<td> ac
+<td> c
+<td bgcolor="grey"> -ab
+<td bgcolor="grey"> -b
+<td> a
+<td bgcolor="grey"> -1
+</table><br>
+Gray marks negative products.  
+528 white, 496 gray, 1024 total.
+<br><br><br>
+<h2>Twist Table for Fixing Dissociatiion</h2>
+<html><body><table border=1>
+<tr>
+<td> 1
+<td> a
+<td> b
+<td> ab
+<td> c
+<td> ac
+<td> bc
+<td> abc
+<td> d
+<td> ad
+<td> bd
+<td> abd
+<td> cd
+<td> acd
+<td> bcd
+<td> abcd
+<td> e
+<td> ae
+<td> be
+<td> abe
+<td> ce
+<td> ace
+<td> bce
+<td> abce
+<td> de
+<td> ade
+<td> bde
+<td> abde
+<td> cde
+<td> acde
+<td> bcde
+<td> abcde
+<tr>
+<td> a
+<td> -1
+<td> ab
+<td> -b
+<td> ac
+<td> -c
+<td bgcolor="grey"> -abc
+<td bgcolor="grey"> bc
+<td> ad
+<td> -d
+<td bgcolor="grey"> -abd
+<td bgcolor="grey"> bd
+<td bgcolor="grey"> -acd
+<td bgcolor="grey"> cd
+<td> abcd
+<td> -bcd
+<td> ae
+<td> -e
+<td bgcolor="grey"> -abe
+<td bgcolor="grey"> be
+<td bgcolor="grey"> -ace
+<td bgcolor="grey"> ce
+<td> abce
+<td> -bce
+<td bgcolor="grey"> -ade
+<td bgcolor="grey"> de
+<td> abde
+<td> -bde
+<td> acde
+<td> -cde
+<td bgcolor="grey"> -abcde
+<td bgcolor="grey"> bcde
+<tr>
+<td> b
+<td> -ab
+<td> -1
+<td> a
+<td> bc
+<td bgcolor="grey"> abc
+<td> -c
+<td bgcolor="grey"> -ac
+<td> bd
+<td bgcolor="grey"> abd
+<td> -d
+<td bgcolor="grey"> -ad
+<td bgcolor="grey"> -bcd
+<td> -abcd
+<td bgcolor="grey"> cd
+<td> acd
+<td> be
+<td bgcolor="grey"> abe
+<td> -e
+<td bgcolor="grey"> -ae
+<td bgcolor="grey"> -bce
+<td> -abce
+<td bgcolor="grey"> ce
+<td> ace
+<td bgcolor="grey"> -bde
+<td> -abde
+<td bgcolor="grey"> de
+<td> ade
+<td> bcde
+<td bgcolor="grey"> abcde
+<td> -cde
+<td bgcolor="grey"> -acde
+<tr>
+<td> ab
+<td> b
+<td> -a
+<td> -1
+<td> abc
+<td bgcolor="grey"> -bc
+<td bgcolor="grey"> ac
+<td> -c
+<td> abd
+<td bgcolor="grey"> -bd
+<td bgcolor="grey"> ad
+<td> -d
+<td bgcolor="grey"> -abcd
+<td> bcd
+<td> -acd
+<td bgcolor="grey"> cd
+<td> abe
+<td bgcolor="grey"> -be
+<td bgcolor="grey"> ae
+<td> -e
+<td bgcolor="grey"> -abce
+<td> bce
+<td> -ace
+<td bgcolor="grey"> ce
+<td bgcolor="grey"> -abde
+<td> bde
+<td> -ade
+<td bgcolor="grey"> de
+<td> abcde
+<td bgcolor="grey"> -bcde
+<td bgcolor="grey"> acde
+<td> -cde
+<tr>
+<td> c
+<td> -ac
+<td> -bc
+<td bgcolor="grey"> -abc
+<td> -1
+<td> a
+<td> b
+<td bgcolor="grey"> ab
+<td> cd
+<td bgcolor="grey"> acd
+<td bgcolor="grey"> bcd
+<td> abcd
+<td> -d
+<td bgcolor="grey"> -ad
+<td bgcolor="grey"> -bd
+<td> -abd
+<td> ce
+<td bgcolor="grey"> ace
+<td bgcolor="grey"> bce
+<td> abce
+<td> -e
+<td bgcolor="grey"> -ae
+<td bgcolor="grey"> -be
+<td> -abe
+<td bgcolor="grey"> -cde
+<td> -acde
+<td> -bcde
+<td bgcolor="grey"> -abcde
+<td bgcolor="grey"> de
+<td> ade
+<td> bde
+<td bgcolor="grey"> abde
+<tr>
+<td> ac
+<td> c
+<td> -abc
+<td bgcolor="grey"> bc
+<td> -a
+<td> -1
+<td bgcolor="grey"> -ab
+<td> b
+<td> acd
+<td bgcolor="grey"> -cd
+<td bgcolor="grey"> abcd
+<td> -bcd
+<td bgcolor="grey"> ad
+<td> -d
+<td> abd
+<td bgcolor="grey"> -bd
+<td> ace
+<td bgcolor="grey"> -ce
+<td bgcolor="grey"> abce
+<td> -bce
+<td bgcolor="grey"> ae
+<td> -e
+<td> abe
+<td bgcolor="grey"> -be
+<td bgcolor="grey"> -acde
+<td> cde
+<td> -abcde
+<td bgcolor="grey"> bcde
+<td> -ade
+<td bgcolor="grey"> de
+<td bgcolor="grey"> -abde
+<td> bde
+<tr>
+<td> bc
+<td> abc
+<td> c
+<td bgcolor="grey"> -ac
+<td> -b
+<td bgcolor="grey"> ab
+<td> -1
+<td> -a
+<td> bcd
+<td bgcolor="grey"> -abcd
+<td bgcolor="grey"> -cd
+<td> acd
+<td bgcolor="grey"> bd
+<td> -abd
+<td> -d
+<td bgcolor="grey"> ad
+<td> bce
+<td bgcolor="grey"> -abce
+<td bgcolor="grey"> -ce
+<td> ace
+<td bgcolor="grey"> be
+<td> -abe
+<td> -e
+<td bgcolor="grey"> ae
+<td bgcolor="grey"> -bcde
+<td> abcde
+<td> cde
+<td bgcolor="grey"> -acde
+<td> -bde
+<td bgcolor="grey"> abde
+<td bgcolor="grey"> de
+<td> -ade
+<tr>
+<td> abc
+<td> -bc
+<td> ac
+<td bgcolor="grey"> c
+<td> -ab
+<td bgcolor="grey"> -b
+<td bgcolor="grey"> a
+<td bgcolor="grey"> -1
+<td> abcd
+<td bgcolor="grey"> bcd
+<td bgcolor="grey"> -acd
+<td> -cd
+<td bgcolor="grey"> abd
+<td> bd
+<td> -ad
+<td bgcolor="grey"> -d
+<td> abce
+<td bgcolor="grey"> bce
+<td bgcolor="grey"> -ace
+<td> -ce
+<td bgcolor="grey"> abe
+<td> be
+<td> -ae
+<td bgcolor="grey"> -e
+<td bgcolor="grey"> -abcde
+<td> -bcde
+<td> acde
+<td bgcolor="grey"> cde
+<td> -abde
+<td bgcolor="grey"> -bde
+<td bgcolor="grey"> ade
+<td> de
+<tr>
+<td> d
+<td> -ad
+<td> -bd
+<td bgcolor="grey"> -abd
+<td> -cd
+<td bgcolor="grey"> -acd
+<td bgcolor="grey"> -bcd
+<td> -abcd
+<td> -1
+<td> a
+<td> b
+<td bgcolor="grey"> ab
+<td> c
+<td bgcolor="grey"> ac
+<td bgcolor="grey"> bc
+<td> abc
+<td> de
+<td bgcolor="grey"> ade
+<td bgcolor="grey"> bde
+<td> abde
+<td bgcolor="grey"> cde
+<td> acde
+<td> bcde
+<td bgcolor="grey"> abcde
+<td> -e
+<td bgcolor="grey"> -ae
+<td bgcolor="grey"> -be
+<td> -abe
+<td bgcolor="grey"> -ce
+<td> -ace
+<td> -bce
+<td bgcolor="grey"> -abce
+<tr>
+<td> ad
+<td> d
+<td> -abd
+<td bgcolor="grey"> bd
+<td> -acd
+<td bgcolor="grey"> cd
+<td> abcd
+<td bgcolor="grey"> -bcd
+<td> -a
+<td> -1
+<td bgcolor="grey"> -ab
+<td> b
+<td bgcolor="grey"> -ac
+<td> c
+<td bgcolor="grey"> abc
+<td> -bc
+<td> ade
+<td bgcolor="grey"> -de
+<td bgcolor="grey"> abde
+<td> -bde
+<td bgcolor="grey"> acde
+<td> -cde
+<td bgcolor="grey"> -abcde
+<td> bcde
+<td bgcolor="grey"> ae
+<td> -e
+<td> abe
+<td bgcolor="grey"> -be
+<td> ace
+<td bgcolor="grey"> -ce
+<td> -abce
+<td bgcolor="grey"> bce
+<tr>
+<td> bd
+<td> abd
+<td> d
+<td bgcolor="grey"> -ad
+<td> -bcd
+<td> -abcd
+<td bgcolor="grey"> cd
+<td bgcolor="grey"> acd
+<td> -b
+<td bgcolor="grey"> ab
+<td> -1
+<td> -a
+<td bgcolor="grey"> -bc
+<td bgcolor="grey"> -abc
+<td> c
+<td> ac
+<td> bde
+<td bgcolor="grey"> -abde
+<td bgcolor="grey"> -de
+<td> ade
+<td bgcolor="grey"> bcde
+<td bgcolor="grey"> abcde
+<td> -cde
+<td> -acde
+<td bgcolor="grey"> be
+<td> -abe
+<td> -e
+<td bgcolor="grey"> ae
+<td> bce
+<td> abce
+<td bgcolor="grey"> -ce
+<td bgcolor="grey"> -ace
+<tr>
+<td> abd
+<td> -bd
+<td> ad
+<td bgcolor="grey"> d
+<td> -abcd
+<td> bcd
+<td> -acd
+<td> cd
+<td> -ab
+<td bgcolor="grey"> -b
+<td bgcolor="grey"> a
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -abc
+<td bgcolor="grey"> bc
+<td bgcolor="grey"> -ac
+<td bgcolor="grey"> c
+<td> abde
+<td bgcolor="grey"> bde
+<td bgcolor="grey"> -ade
+<td> -de
+<td bgcolor="grey"> abcde
+<td bgcolor="grey"> -bcde
+<td bgcolor="grey"> acde
+<td bgcolor="grey"> -cde
+<td bgcolor="grey"> abe
+<td> be
+<td> -ae
+<td bgcolor="grey"> -e
+<td> abce
+<td> -bce
+<td> ace
+<td> -ce
+<tr>
+<td> cd
+<td> acd
+<td> bcd
+<td> abcd
+<td> d
+<td bgcolor="grey"> -ad
+<td bgcolor="grey"> -bd
+<td bgcolor="grey"> -abd
+<td> -c
+<td bgcolor="grey"> ac
+<td bgcolor="grey"> bc
+<td bgcolor="grey"> abc
+<td> -1
+<td> -a
+<td> -b
+<td> -ab
+<td> cde
+<td bgcolor="grey"> -acde
+<td bgcolor="grey"> -bcde
+<td bgcolor="grey"> -abcde
+<td bgcolor="grey"> -de
+<td> ade
+<td> bde
+<td> abde
+<td bgcolor="grey"> ce
+<td> -ace
+<td> -bce
+<td> -abce
+<td> -e
+<td bgcolor="grey"> ae
+<td bgcolor="grey"> be
+<td bgcolor="grey"> abe
+<tr>
+<td> acd
+<td> -cd
+<td> abcd
+<td> -bcd
+<td> ad
+<td bgcolor="grey"> d
+<td> abd
+<td> -bd
+<td> -ac
+<td bgcolor="grey"> -c
+<td bgcolor="grey"> abc
+<td bgcolor="grey"> -bc
+<td bgcolor="grey"> a
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> ab
+<td bgcolor="grey"> -b
+<td> acde
+<td bgcolor="grey"> cde
+<td bgcolor="grey"> -abcde
+<td bgcolor="grey"> bcde
+<td bgcolor="grey"> -ade
+<td> -de
+<td bgcolor="grey"> -abde
+<td bgcolor="grey"> bde
+<td bgcolor="grey"> ace
+<td> ce
+<td> -abce
+<td> bce
+<td> -ae
+<td bgcolor="grey"> -e
+<td> -abe
+<td> be
+<tr>
+<td> bcd
+<td> -abcd
+<td> -cd
+<td> acd
+<td> bd
+<td> -abd
+<td bgcolor="grey"> d
+<td> ad
+<td> -bc
+<td bgcolor="grey"> -abc
+<td bgcolor="grey"> -c
+<td bgcolor="grey"> ac
+<td bgcolor="grey"> b
+<td bgcolor="grey"> -ab
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> a
+<td> bcde
+<td bgcolor="grey"> abcde
+<td bgcolor="grey"> cde
+<td bgcolor="grey"> -acde
+<td bgcolor="grey"> -bde
+<td bgcolor="grey"> abde
+<td> -de
+<td bgcolor="grey"> -ade
+<td bgcolor="grey"> bce
+<td> abce
+<td> ce
+<td> -ace
+<td> -be
+<td> abe
+<td bgcolor="grey"> -e
+<td> -ae
+<tr>
+<td> abcd
+<td> bcd
+<td> -acd
+<td> -cd
+<td> abd
+<td> bd
+<td> -ad
+<td bgcolor="grey"> d
+<td> -abc
+<td bgcolor="grey"> bc
+<td bgcolor="grey"> -ac
+<td bgcolor="grey"> -c
+<td bgcolor="grey"> ab
+<td bgcolor="grey"> b
+<td bgcolor="grey"> -a
+<td bgcolor="grey"> -1
+<td> abcde
+<td bgcolor="grey"> -bcde
+<td bgcolor="grey"> acde
+<td bgcolor="grey"> cde
+<td bgcolor="grey"> -abde
+<td bgcolor="grey"> -bde
+<td bgcolor="grey"> ade
+<td> -de
+<td bgcolor="grey"> abce
+<td> -bce
+<td> ace
+<td> ce
+<td> -abe
+<td> -be
+<td> ae
+<td bgcolor="grey"> -e
+<tr>
+<td> e
+<td> -ae
+<td> -be
+<td bgcolor="grey"> -abe
+<td> -ce
+<td bgcolor="grey"> -ace
+<td bgcolor="grey"> -bce
+<td> -abce
+<td> -de
+<td bgcolor="grey"> -ade
+<td bgcolor="grey"> -bde
+<td> -abde
+<td bgcolor="grey"> -cde
+<td> -acde
+<td> -bcde
+<td bgcolor="grey"> -abcde
+<td> -1
+<td> a
+<td> b
+<td bgcolor="grey"> ab
+<td> c
+<td bgcolor="grey"> ac
+<td bgcolor="grey"> bc
+<td> abc
+<td> d
+<td bgcolor="grey"> ad
+<td bgcolor="grey"> bd
+<td> abd
+<td bgcolor="grey"> cd
+<td> acd
+<td> bcd
+<td bgcolor="grey"> abcd
+<tr>
+<td> ae
+<td> e
+<td> -abe
+<td bgcolor="grey"> be
+<td> -ace
+<td bgcolor="grey"> ce
+<td> abce
+<td bgcolor="grey"> -bce
+<td> -ade
+<td bgcolor="grey"> de
+<td> abde
+<td bgcolor="grey"> -bde
+<td> acde
+<td bgcolor="grey"> -cde
+<td> -abcde
+<td bgcolor="grey"> bcde
+<td> -a
+<td> -1
+<td bgcolor="grey"> -ab
+<td> b
+<td bgcolor="grey"> -ac
+<td> c
+<td bgcolor="grey"> abc
+<td> -bc
+<td bgcolor="grey"> -ad
+<td> d
+<td bgcolor="grey"> abd
+<td> -bd
+<td bgcolor="grey"> acd
+<td> -cd
+<td bgcolor="grey"> -abcd
+<td> bcd
+<tr>
+<td> be
+<td> abe
+<td> e
+<td bgcolor="grey"> -ae
+<td> -bce
+<td> -abce
+<td bgcolor="grey"> ce
+<td bgcolor="grey"> ace
+<td> -bde
+<td> -abde
+<td bgcolor="grey"> de
+<td bgcolor="grey"> ade
+<td> bcde
+<td> abcde
+<td bgcolor="grey"> -cde
+<td bgcolor="grey"> -acde
+<td> -b
+<td bgcolor="grey"> ab
+<td> -1
+<td> -a
+<td bgcolor="grey"> -bc
+<td bgcolor="grey"> -abc
+<td> c
+<td> ac
+<td bgcolor="grey"> -bd
+<td bgcolor="grey"> -abd
+<td> d
+<td> ad
+<td bgcolor="grey"> bcd
+<td bgcolor="grey"> abcd
+<td> -cd
+<td> -acd
+<tr>
+<td> abe
+<td> -be
+<td> ae
+<td bgcolor="grey"> e
+<td> -abce
+<td> bce
+<td> -ace
+<td> ce
+<td> -abde
+<td> bde
+<td> -ade
+<td> de
+<td> abcde
+<td> -bcde
+<td> acde
+<td> -cde
+<td> -ab
+<td bgcolor="grey"> -b
+<td bgcolor="grey"> a
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -abc
+<td bgcolor="grey"> bc
+<td bgcolor="grey"> -ac
+<td bgcolor="grey"> c
+<td bgcolor="grey"> -abd
+<td bgcolor="grey"> bd
+<td bgcolor="grey"> -ad
+<td bgcolor="grey"> d
+<td bgcolor="grey"> abcd
+<td bgcolor="grey"> -bcd
+<td bgcolor="grey"> acd
+<td bgcolor="grey"> -cd
+<tr>
+<td> ce
+<td> ace
+<td> bce
+<td> abce
+<td> e
+<td bgcolor="grey"> -ae
+<td bgcolor="grey"> -be
+<td bgcolor="grey"> -abe
+<td> -cde
+<td> -acde
+<td> -bcde
+<td> -abcde
+<td bgcolor="grey"> de
+<td bgcolor="grey"> ade
+<td bgcolor="grey"> bde
+<td bgcolor="grey"> abde
+<td> -c
+<td bgcolor="grey"> ac
+<td bgcolor="grey"> bc
+<td bgcolor="grey"> abc
+<td> -1
+<td> -a
+<td> -b
+<td> -ab
+<td bgcolor="grey"> -cd
+<td bgcolor="grey"> -acd
+<td bgcolor="grey"> -bcd
+<td bgcolor="grey"> -abcd
+<td> d
+<td> ad
+<td> bd
+<td> abd
+<tr>
+<td> ace
+<td> -ce
+<td> abce
+<td> -bce
+<td> ae
+<td bgcolor="grey"> e
+<td> abe
+<td> -be
+<td> -acde
+<td> cde
+<td> -abcde
+<td> bcde
+<td> -ade
+<td> de
+<td> -abde
+<td> bde
+<td> -ac
+<td bgcolor="grey"> -c
+<td bgcolor="grey"> abc
+<td bgcolor="grey"> -bc
+<td bgcolor="grey"> a
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> ab
+<td bgcolor="grey"> -b
+<td bgcolor="grey"> -acd
+<td bgcolor="grey"> cd
+<td bgcolor="grey"> -abcd
+<td bgcolor="grey"> bcd
+<td bgcolor="grey"> -ad
+<td bgcolor="grey"> d
+<td bgcolor="grey"> -abd
+<td bgcolor="grey"> bd
+<tr>
+<td> bce
+<td> -abce
+<td> -ce
+<td> ace
+<td> be
+<td> -abe
+<td bgcolor="grey"> e
+<td> ae
+<td> -bcde
+<td> abcde
+<td> cde
+<td> -acde
+<td> -bde
+<td> abde
+<td> de
+<td> -ade
+<td> -bc
+<td bgcolor="grey"> -abc
+<td bgcolor="grey"> -c
+<td bgcolor="grey"> ac
+<td bgcolor="grey"> b
+<td bgcolor="grey"> -ab
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> a
+<td bgcolor="grey"> -bcd
+<td bgcolor="grey"> abcd
+<td bgcolor="grey"> cd
+<td bgcolor="grey"> -acd
+<td bgcolor="grey"> -bd
+<td bgcolor="grey"> abd
+<td bgcolor="grey"> d
+<td bgcolor="grey"> -ad
+<tr>
+<td> abce
+<td> bce
+<td> -ace
+<td> -ce
+<td> abe
+<td> be
+<td> -ae
+<td bgcolor="grey"> e
+<td> -abcde
+<td> -bcde
+<td> acde
+<td> cde
+<td> -abde
+<td> -bde
+<td> ade
+<td> de
+<td> -abc
+<td bgcolor="grey"> bc
+<td bgcolor="grey"> -ac
+<td bgcolor="grey"> -c
+<td bgcolor="grey"> ab
+<td bgcolor="grey"> b
+<td bgcolor="grey"> -a
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -abcd
+<td bgcolor="grey"> -bcd
+<td bgcolor="grey"> acd
+<td bgcolor="grey"> cd
+<td bgcolor="grey"> -abd
+<td bgcolor="grey"> -bd
+<td bgcolor="grey"> ad
+<td bgcolor="grey"> d
+<tr>
+<td> de
+<td> ade
+<td> bde
+<td> abde
+<td> cde
+<td> acde
+<td> bcde
+<td> abcde
+<td> e
+<td bgcolor="grey"> -ae
+<td bgcolor="grey"> -be
+<td bgcolor="grey"> -abe
+<td bgcolor="grey"> -ce
+<td bgcolor="grey"> -ace
+<td bgcolor="grey"> -bce
+<td bgcolor="grey"> -abce
+<td> -d
+<td bgcolor="grey"> ad
+<td bgcolor="grey"> bd
+<td bgcolor="grey"> abd
+<td bgcolor="grey"> cd
+<td bgcolor="grey"> acd
+<td bgcolor="grey"> bcd
+<td bgcolor="grey"> abcd
+<td> -1
+<td> -a
+<td> -b
+<td> -ab
+<td> -c
+<td> -ac
+<td> -bc
+<td> -abc
+<tr>
+<td> ade
+<td> -de
+<td> abde
+<td> -bde
+<td> acde
+<td> -cde
+<td bgcolor="grey"> -abcde
+<td bgcolor="grey"> bcde
+<td> ae
+<td bgcolor="grey"> e
+<td> abe
+<td> -be
+<td> ace
+<td> -ce
+<td bgcolor="grey"> -abce
+<td bgcolor="grey"> bce
+<td> -ad
+<td bgcolor="grey"> -d
+<td bgcolor="grey"> abd
+<td bgcolor="grey"> -bd
+<td bgcolor="grey"> acd
+<td bgcolor="grey"> -cd
+<td> -abcd
+<td> bcd
+<td bgcolor="grey"> a
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> ab
+<td bgcolor="grey"> -b
+<td bgcolor="grey"> ac
+<td bgcolor="grey"> -c
+<td> -abc
+<td> bc
+<tr>
+<td> bde
+<td> -abde
+<td> -de
+<td> ade
+<td> bcde
+<td bgcolor="grey"> abcde
+<td> -cde
+<td bgcolor="grey"> -acde
+<td> be
+<td> -abe
+<td bgcolor="grey"> e
+<td> ae
+<td> bce
+<td bgcolor="grey"> abce
+<td> -ce
+<td bgcolor="grey"> -ace
+<td> -bd
+<td bgcolor="grey"> -abd
+<td bgcolor="grey"> -d
+<td bgcolor="grey"> ad
+<td bgcolor="grey"> bcd
+<td> abcd
+<td bgcolor="grey"> -cd
+<td> -acd
+<td bgcolor="grey"> b
+<td bgcolor="grey"> -ab
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> a
+<td bgcolor="grey"> bc
+<td> abc
+<td bgcolor="grey"> -c
+<td> -ac
+<tr>
+<td> abde
+<td> bde
+<td> -ade
+<td> -de
+<td> abcde
+<td bgcolor="grey"> -bcde
+<td bgcolor="grey"> acde
+<td> -cde
+<td> abe
+<td> be
+<td> -ae
+<td bgcolor="grey"> e
+<td> abce
+<td bgcolor="grey"> -bce
+<td bgcolor="grey"> ace
+<td> -ce
+<td> -abd
+<td bgcolor="grey"> bd
+<td bgcolor="grey"> -ad
+<td bgcolor="grey"> -d
+<td bgcolor="grey"> abcd
+<td> -bcd
+<td> acd
+<td bgcolor="grey"> -cd
+<td bgcolor="grey"> ab
+<td bgcolor="grey"> b
+<td bgcolor="grey"> -a
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> abc
+<td> -bc
+<td> ac
+<td bgcolor="grey"> -c
+<tr>
+<td> cde
+<td> -acde
+<td> -bcde
+<td bgcolor="grey"> -abcde
+<td> -de
+<td> ade
+<td> bde
+<td bgcolor="grey"> abde
+<td> ce
+<td> -ace
+<td> -bce
+<td bgcolor="grey"> -abce
+<td bgcolor="grey"> e
+<td> ae
+<td> be
+<td bgcolor="grey"> abe
+<td> -cd
+<td bgcolor="grey"> -acd
+<td bgcolor="grey"> -bcd
+<td> -abcd
+<td bgcolor="grey"> -d
+<td bgcolor="grey"> ad
+<td bgcolor="grey"> bd
+<td> abd
+<td bgcolor="grey"> c
+<td bgcolor="grey"> -ac
+<td bgcolor="grey"> -bc
+<td> -abc
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> a
+<td bgcolor="grey"> b
+<td> ab
+<tr>
+<td> acde
+<td> cde
+<td> -abcde
+<td bgcolor="grey"> bcde
+<td> -ade
+<td> -de
+<td bgcolor="grey"> -abde
+<td> bde
+<td> ace
+<td> ce
+<td> -abce
+<td bgcolor="grey"> bce
+<td> -ae
+<td bgcolor="grey"> e
+<td bgcolor="grey"> -abe
+<td> be
+<td> -acd
+<td bgcolor="grey"> cd
+<td bgcolor="grey"> -abcd
+<td> bcd
+<td bgcolor="grey"> -ad
+<td bgcolor="grey"> -d
+<td> -abd
+<td bgcolor="grey"> bd
+<td bgcolor="grey"> ac
+<td bgcolor="grey"> c
+<td bgcolor="grey"> -abc
+<td> bc
+<td bgcolor="grey"> -a
+<td bgcolor="grey"> -1
+<td> -ab
+<td bgcolor="grey"> b
+<tr>
+<td> bcde
+<td> abcde
+<td> cde
+<td bgcolor="grey"> -acde
+<td> -bde
+<td bgcolor="grey"> abde
+<td> -de
+<td> -ade
+<td> bce
+<td> abce
+<td> ce
+<td bgcolor="grey"> -ace
+<td> -be
+<td bgcolor="grey"> abe
+<td bgcolor="grey"> e
+<td> -ae
+<td> -bcd
+<td bgcolor="grey"> abcd
+<td bgcolor="grey"> cd
+<td> -acd
+<td bgcolor="grey"> -bd
+<td> abd
+<td bgcolor="grey"> -d
+<td bgcolor="grey"> -ad
+<td bgcolor="grey"> bc
+<td bgcolor="grey"> abc
+<td bgcolor="grey"> c
+<td> -ac
+<td bgcolor="grey"> -b
+<td> ab
+<td bgcolor="grey"> -1
+<td bgcolor="grey"> -a
+<tr>
+<td> abcde
+<td> -bcde
+<td> acde
+<td bgcolor="grey"> cde
+<td> -abde
+<td bgcolor="grey"> -bde
+<td bgcolor="grey"> ade
+<td bgcolor="grey"> -de
+<td> abce
+<td> -bce
+<td> ace
+<td bgcolor="grey"> ce
+<td> -abe
+<td bgcolor="grey"> -be
+<td bgcolor="grey"> ae
+<td> e
+<td> -abcd
+<td bgcolor="grey"> -bcd
+<td bgcolor="grey"> acd
+<td> cd
+<td bgcolor="grey"> -abd
+<td> -bd
+<td> ad
+<td> -d
+<td bgcolor="grey"> abc
+<td bgcolor="grey"> -bc
+<td bgcolor="grey"> ac
+<td> c
+<td bgcolor="grey"> -ab
+<td> -b
+<td> a
+<td> -1
+</table><br>
+Gray marks extra -1 is required for the product. 
+560 white, 464 gray, 1024 total.
