@@ -1,38 +1,36 @@
+Original title:
 
-# Trans-Sedenion Medtation with the Moufang Clan
+# Trans-Sedenion Meditation with the Moufang Clan
 
-### or
+(Contains 0% real Moufang Loops.)
 
-## Three Discoveries in Multiplying Trigintaduonion Bases
+Actual topic:
 
-by Henry Strickland, 2016.
+## Three Discoveries in Multiplying Trigintaduonion Bases, and an Application.
+
+by Henry Strickland, 2016, for 
+[G4G12](http://gathering4gardner.org/)  
+
+Main web page: http://wiki.yak.net/1093
+
+## My Discoveries
 
 * Annihilating-Leapfrog Identity
 * Letter-Gap Symmetry
 * Multiplying by Dissociate-Then-Fix
 
-## My Application: a C*ndyl*and game.
+
+## My Application: a Hyper-Complex C*ndyl*and game.
 
 Instead of taking whole number steps from START to FINISH,
 our board positions are trigintaduonion numbers,
 and we multiply (instead of add) steps to get from 1 to FINISH. 
 
 * Multiplayer board game: "Cayley-Dickson Trans-Sedenion Hyper-Complex C*nadyl*and"
-* Solitare web page.
+* (Solitaire game web page)[http://wiki.yak.net/1093/solitaire.html]
 
 ## Hyper-Complex Summary
 
-<!--
-<table>
-<tr><td> real<br>dimensions <td> imaginary<br>dimensions <td> total<br>dimensions <td> Name
-<tr><td>         1 <td>              0 <td>          1 <td> Real Numbers
-<tr><td>         1 <td>              1 <td>          2 <td> Complex Numbers
-<tr><td>         1 <td>              3 <td>          4 <td> Quaternions
-<tr><td>         1 <td>              7 <td>          8 <td> Octonions
-<tr><td>         1 <td>             15 <td>         16 <td> Sedenions
-<tr><td>         1 <td>             31 <td>         32 <td> Trigintaduonions
-</table>
--->
 ```
  num         num     num
  real  imagimary   total
@@ -44,57 +42,69 @@ and we multiply (instead of add) steps to get from 1 to FINISH.
     1         7        8    Octonions
     1        15       16    Sedenions
     1        31       32    Trigintaduonions
+    1    (2^n)-1     2^n    ...etc...
 ```
 
 ## How we will write the bases:
+```
+1 Real Number:
+                 1
+2 Complex Numbers:
+                 1  a             ( We use "a" instead of "i". )
+4 Quaternions:
+                 1, a, b, ab     ( Instead of "i", "j", & "k". )
+8 Octonions:
+                 1, a, b, ab, c, ac, bc, abc
+16 Sedenions:
+                 1, a, b, ab, c, ac, bc, abc,
+                 d, ad, bd, abd, cd, acd, bcd, abcd
+32 Trigintaduonions:
+                 1, a, b, ab, c, ac, bc, abc,
+                 d, ad, bd, abd, cd, acd, bcd, abcd,
+                 e, ae, be, abe, ce, ace, bce, abce,
+                 de, ade, bde, abde, cde, acde, bcde, abcde
+```
 
-### 1 Real Number
-1
-### 2 Complex Numbers
-1, a
-### 4 Quaternions
-1, a, b, ab
-### 8 Octonions
-1, a, b, ab, c, ac, bc, abc
-### 16 Sedenions
-1, a, b, ab, c, ac, bc, abc, d, ad, bd, abd, cd, acd, bcd, abcd
-### 32 Trigintaduonions
-1, a, b, ab, c, ac, bc, abc, d, ad, bd, abd, cd, acd, bcd, abcd,
-e, ae, be, abe, ce, ace, bce, abce, de, ade, bde, abde, cde, acde, bcde, abcde
 
-## From here on, we use the Trigintaduonion Bases (and their negatives) for multiplication.
+## Trigintaduonion Bases, I choose you!
+
+From here on, we only use the Trigintaduonion Bases (and their negatives) for multiplication.
 
 *But it would apply generally to any hyper-complex system.*
 
 *Multiplication is defined by the usual Cayley-Dickson Construction*
 *(see Wikipedia or "The Octonions" by John C. Baez [2001].)*
 
-Our convention: Associate Left-to-Right: "abcde" means "(((ab)c)d)e"
-
 Canonically we write our imaginary bases with letters:
 
 * in alphabetical order
 * no duplicates
 
+*Some are a single letter: they are like primary bases.*
+
+*Some are multi-letter.  They are independant imaginary bases, but they are also the product of 2 or more single-letter bases.*
+
+Our convention: Multiply Left-to-Right: "abcde" means "(((ab)c)d)e"
+
 ### Warnings:
 
-* Not commutative ...... don't assume xy = yx
-* Not associative ...... don't assume x(yz) = (xy)z
-* Not Moufang ...... don't assume (zx)(yz) = z(xy)z
-* Not alternative ...... don't assume x(xy) = (xx)y
+* Not commutative ...... don't assume xy = yx. &nbsp; &nbsp; (But they are anti-commutative!  xy = -yx, unless x=y or x=&plusmn;1 or y=&plusmn;1.)
+* Not associative ...... don't assume x(yz) = (xy)z. &nbsp; &nbsp; (But they are plus-or-minus associative! x(yz) = &plusmn;(xy)z.)
+* Not Moufang ...... don't assume (zx)(yz) = z(xy)z.
+* Not alternative ...... don't assume x(xy) = (xx)y.
 
 ### The good news:
 
 The set of 32 bases and their 32 negatives is closed under multiplication.
 
-Multiplying by 1 and -1 work as we want (on left or right).
+Multiplying by 1 and -1 work as we want (on left or right).  Two -1's cancel.
 
-Also multiplying any basis (except 1) by itself gives -1 (that is, the letter bases are all imaginary).
-
-Multiplying 1 or -1 by itself gives 1.  (They are real.)
+Multiplying any basis (except 1) by itself gives -1 (that is, the letter bases are all imaginary).
 
 
 # Annihilating-Leapfrog Identity
+
+*As you discovered in the Solitaire Game.*
 
 But it only works for a single-letter multiplier!
 
@@ -145,13 +155,13 @@ If you cross the lines, you might prove that "ab = ba" which is wrong!
 
 # Multiplying by Dissociate-Then-Fix
 
-Here's a Twist Table for multiplying trigintaduonion bases:
+Below is a Twist Table for multiplying trigintaduonion bases:
+it's gray if the product is negative.
 
-LINK
+Below that is another Twist Table, for fixing "Dissociations":
+it's gray if the dissociation is the negative of the product.
 
-Here's another Twist Table, for fixing "Dissociations":
-
-LINK
+The second Twist Table looks simpler than the first, so we prefer to use it instead.
 
 Dissociating is my name for removing parentheses.
 Remember that multiplication is not associative, so this can change the result,
@@ -176,6 +186,7 @@ and we get -1.   So we multiply the entire result by it:
 ```
 and that will be correct.
 
-
+*The Advanced Card Deck for the Game uses this technique to multiply by*
+*multi-letter bases, without the full complexity of the Multiplication Twist Table.*
 
 
